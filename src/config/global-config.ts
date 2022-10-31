@@ -1,0 +1,1 @@
+export const IOS_DIST = (fileName: string) => `ios/${fileName}.shortcut`

@@ -1,0 +1,21 @@
+{
+    "name": "ios-shortcuts",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build": "npm run remove-dist && tsc && npm run create-shortcut",
+        "remove-dist": "rm -rf dist && rm -rf ios",
+        "create-shortcut": "node scripts/create-shortcut.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@joshfarrant/shortcuts-js": "^0.6.0"
+    },
+    "devDependencies": {
+        "@types/node": "^18.11.8"
+    }
+}
