@@ -1,0 +1,49 @@
+{
+    "$schema": "./node_modules/nx/schemas/nx-schema.json",
+    "namedInputs": {
+        "default": ["{projectRoot}/**/*", "sharedGlobals"],
+        "production": ["default", "!{projectRoot}/.eslintrc.json", "!{projectRoot}/eslint.config.cjs"],
+        "sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml"]
+    },
+    "nxCloudId": "67697af15ad9512e8f4cf910",
+    "plugins": [
+        {
+            "plugin": "@nx/js/typescript",
+            "options": {
+                "typecheck": {
+                    "targetName": "typecheck"
+                },
+                "build": {
+                    "targetName": "build",
+                    "configName": "tsconfig.lib.json"
+                }
+            }
+        },
+        {
+            "plugin": "@nx/eslint/plugin",
+            "options": {
+                "targetName": "lint"
+            }
+        }
+    ],
+    "release": {
+        "projects": ["packages/*"],
+        "projectsRelationship": "independent",
+        "releaseTagPattern": "release/{projectName}/{version}",
+        "changelog": {
+            "workspaceChangelog": {
+                "createRelease": "github"
+            },
+            "projectChangelogs": true,
+            "version": {
+                "conventionalCommits": {
+                    "types": {
+                        "docs": {
+                            "semverBump": "none"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

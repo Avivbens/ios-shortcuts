@@ -1,0 +1,59 @@
+{
+  "name": "@ios-shortcuts/source",
+  "version": "0.0.0",
+  "license": "MIT",
+  "description": "description",
+  "keywords": [],
+  "homepage": "https://github.com/Avivbens/ios-shortcuts",
+  "repository": {
+      "type": "git",
+      "url": "git+https://github.com/Avivbens/ios-shortcuts.git"
+  },
+  "author": {
+      "name": "Aviv Ben Shahar",
+      "email": "avivbens87@gmail.com"
+  },
+  "maintainers": [
+      {
+          "name": "Aviv Ben Shahar",
+          "email": "avivbens87@gmail.com"
+      }
+  ],
+  "scripts": {
+    "prepare": "husky || exit 0"
+  },
+  "private": true,
+  "devDependencies": {
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@eslint/js": "^9.8.0",
+    "@nx/eslint": "20.3.0",
+    "@nx/eslint-plugin": "20.3.0",
+    "@nx/js": "20.3.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^12.0.0",
+    "@semantic-release/exec": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^10.0.3",
+    "@semantic-release/release-notes-generator": "^13.0.0",
+    "@swc-node/register": "~1.9.1",
+    "@swc/core": "~1.5.7",
+    "@swc/helpers": "~0.5.11",
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "@types/node": "18.16.9",
+    "eslint": "^9.8.0",
+    "eslint-config-prettier": "^9.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.2",
+    "nx": "20.3.0",
+    "prettier": "^3.4.2",
+    "semantic-release": "^23.0.8",
+    "tslib": "^2.3.0",
+    "typescript": "~5.6.2",
+    "typescript-eslint": "^8.13.0"
+  },
+  "workspaces": [
+    "libs/**",
+    "packages/**"
+  ]
+}

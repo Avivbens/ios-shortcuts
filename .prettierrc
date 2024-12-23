@@ -1,0 +1,20 @@
+{
+    "$schema": "https://json.schemastore.org/prettierrc",
+    "tabWidth": 4,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "semi": false,
+    "printWidth": 120,
+    "importOrder": ["^@.*/(.*)$", "^[./]"],
+    "importOrderSeparation": false,
+    "importOrderSortSpecifiers": true,
+    "plugins": ["@trivago/prettier-plugin-sort-imports"],
+    "overrides": [
+        {
+            "files": ["*.ts"],
+            "options": {
+                "importOrderParserPlugins": ["typescript", "decorators-legacy"]
+            }
+        }
+    ]
+}
