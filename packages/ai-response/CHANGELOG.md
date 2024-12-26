@@ -1,3 +1,13 @@
+## 0.2.2 (2024-12-26)
+
+### 🩹 Fixes
+
+- **ai-response:** clarify user configuration ([790d0ae](https://github.com/Avivbens/ios-shortcuts/commit/790d0ae))
+
+### ❤️ Thank You
+
+- Aviv Ben Shahar
+
 ## 0.2.1 (2024-12-26)
 
 ### 🩹 Fixes
