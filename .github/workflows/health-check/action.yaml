@@ -5,7 +5,7 @@ description: 'Checks the codebase health'
 inputs:
     run-tests-command:
         description: 'Run tests command, default is `npm test`'
-        default: 'npm test'
+        default: 'npx nx affected --target test'
         required: false
 
     run-tests:
@@ -15,7 +15,7 @@ inputs:
 
     run-lint-command:
         description: 'Run linter command, default is `npm run lint`'
-        default: 'npm run lint'
+        default: 'npx nx affected --target lint'
         required: false
 
     run-lint:
@@ -25,7 +25,7 @@ inputs:
 
     run-build-command:
         description: 'Run build command, default is `npm run build`'
-        default: 'npm run build'
+        default: 'npx nx affected --target build'
         required: false
 
     run-build:
@@ -38,6 +38,10 @@ runs:
     steps:
         - name: 🖥️ Setup Env
           uses: ./.github/workflows/install
+
+        - name: 'Derive appropriate SHAs for base and head for `nx affected` commands'
+          uses: nrwl/nx-set-shas@v4
+          with: { main-branch-name: 'master' }
 
         - name: 🧪 Test
           if: ${{ inputs.run-tests == 'true' }}

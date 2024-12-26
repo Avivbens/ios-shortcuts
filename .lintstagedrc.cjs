@@ -1,7 +1,4 @@
-module.exports = process.env.CI
-    ? {
-          '**/*.(js|ts|mts|mjs|cjs|cts|json|yaml)': 'npm run lint',
-      }
-    : {
-          '**/*.(js|ts|mts|mjs|cjs|cts|json|yaml)': 'npm run lint:fix',
-      }
+module.exports = {
+    '*.{ts,cjs,js,json}': 'npx eslint --cache --fix',
+    '**/*': 'npx prettier --cache --write --ignore-unknown',
+}
