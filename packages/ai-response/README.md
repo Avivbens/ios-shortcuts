@@ -11,8 +11,7 @@
 
 > **Elevate your conversations** by getting AI-powered suggestions for your current chat. This shortcut is designed to analyze an ongoing conversation (captured via screenshot) and generate multiple response options for you, in a tone of your choice.
 
-<a id="download" href="https://github.com/Avivbens/ios-shortcuts/raw/refs/heads/master/packages/ai-response/src/AI%20Response.shortcut" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-    <span>Download</span>
+<a id="download" href="https://github.com/Avivbens/ios-shortcuts/raw/refs/heads/master/packages/ai-response/src/AI%20Response.shortcut">
   <img src="https://www.oiml.org/en/ressources/icons/download-button.jpg/@@images/3139e560-3f59-4ee9-a5e4-71f0ee9535eb.png" alt="Download" width="100" height="100">
 </a>
 
