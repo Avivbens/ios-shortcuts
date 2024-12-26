@@ -30,11 +30,12 @@
         "projects": ["packages/*"],
         "projectsRelationship": "independent",
         "releaseTagPattern": "release/{projectName}/{version}",
+        "version": {
+            "conventionalCommits": true
+        },
         "changelog": {
-            "workspaceChangelog": {
-                "createRelease": "github"
-            },
-            "projectChangelogs": true,
+            "workspaceChangelog": { "createRelease": "github" },
+            "projectChangelogs": { "createRelease": "github" },
             "version": {
                 "conventionalCommits": {
                     "types": {
