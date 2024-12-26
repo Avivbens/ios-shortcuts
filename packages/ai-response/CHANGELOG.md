@@ -1,3 +1,13 @@
+## 0.2.1 (2024-12-26)
+
+### 🩹 Fixes
+
+- **ai-response:** version + random check ([7446649](https://github.com/Avivbens/ios-shortcuts/commit/7446649))
+
+### ❤️ Thank You
+
+- Aviv Ben Shahar
+
 ## 0.2.0 (2024-12-26)
 
 ### 🚀 Features
