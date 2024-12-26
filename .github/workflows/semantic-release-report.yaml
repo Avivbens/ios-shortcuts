@@ -3,7 +3,7 @@ name: Semantic Release Report 📝
 on:
     pull_request:
         branches:
-            - master_1
+            - master
 
 permissions:
     contents: write
@@ -27,16 +27,10 @@ jobs:
             - name: 🔬 Check Semantic Versioning
               id: semantic-release
               run: |
-                  GITHUB_REF=${{ github.head_ref }}
-                  npx semantic-release --no-ci --dry-run --plugins @semantic-release/commit-analyzer,@semantic-release/release-notes-generator --branches ${{ github.head_ref }} > output.txt
+                  npx nx release --dry-run > output.txt
                   REPORT=$(cat output.txt | base64 -w 0)
 
-                  VERSION=$(cat output.txt | \
-                  grep "The next release version is" | \
-                  node -e "console.log(require('fs').readFileSync(0, 'utf-8').match(/The next release version is (\d+\.\d+\.\d+(-beta\.\d+)?)/)?.[1] ?? '')")
-
                   echo "releaseNote=$REPORT" >> $GITHUB_OUTPUT
-                  echo "version=$VERSION" >> $GITHUB_OUTPUT
 
             - name: 📝 Report semantic versioning
               uses: actions/github-script@v7
@@ -46,16 +40,16 @@ jobs:
                   script: |
                       // build release note
                       const semanticReleaseOutput = Buffer.from('${{ steps.semantic-release.outputs.releaseNote }}', 'base64').toString('utf8');
-                      const semanticReleaseLogMatch = /^[[0-9:\sAMPM]+\]\s\[semantic-release\].*$/;
+                      const semanticReleaseLogMatch = /^.*Creating GitHub Release$/;
+                      const semanticReleaseEndLogMatch = /^.*Skipped publishing packages\.$/;
                       const lines = semanticReleaseOutput.split('\n');
-                      const lastSemanticReleaseLogIndex = [...lines]
-                          .reverse()
+                      const lastSemanticReleaseLogIndex = lines
                           .findIndex((line) => line.match(semanticReleaseLogMatch));
 
-                      const nextVersion = '${{ steps.semantic-release.outputs.version }}';
+                      const lastSemanticReleaseEndLogIndex = lines
+                          .findIndex((line) => line.match(semanticReleaseEndLogMatch));
 
-                      const releaseNoteIndex = lines.length - lastSemanticReleaseLogIndex;
-                      const releaseNote = lines.slice(releaseNoteIndex);
+                      const releaseNote = lines.slice(lastSemanticReleaseLogIndex + 1, lastSemanticReleaseEndLogIndex);
 
                       let res = releaseNote.join('\n');
                       if (!releaseNote.length || !res) {
@@ -63,8 +57,7 @@ jobs:
                       }
 
                       const SEMANTIC_RELEASE_BODY_HEADER = '## 📝 Semantic Release Report';
-                      const NEXT_VERSION_HEADER = `### 🚀 Next Version: ${nextVersion}`;
-                      const body = [SEMANTIC_RELEASE_BODY_HEADER, NEXT_VERSION_HEADER, res].join('\n');
+                      const body = [SEMANTIC_RELEASE_BODY_HEADER, res].join('\n');
 
                       // get last comment
                       const comments = await github.rest.issues.listComments({

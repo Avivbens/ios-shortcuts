@@ -1,0 +1,91 @@
+---
+name: Nx Affected Report 📝
+
+on:
+    pull_request:
+        paths:
+            - 'projects/**/*'
+            - '.github/workflows/nx-report.yaml'
+        branches:
+            - master
+
+permissions:
+    contents: read
+    actions: read
+    issues: write
+    pull-requests: write
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.head_ref }}
+    cancel-in-progress: true
+
+jobs:
+    Nx-affected:
+        runs-on: ubuntu-latest
+        steps:
+            - name: 📀 Checkout
+              uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
+
+            - name: 🖥️ Setup Env
+              uses: ./.github/workflows/install
+
+            - name: 'Derive appropriate SHAs for base and head for `nx affected` commands'
+              uses: nrwl/nx-set-shas@v4
+              with: { main-branch-name: 'master' }
+
+            - name: Get affected projects
+              id: 'affected-projects'
+              shell: bash
+              run: |
+                  affected=$(npx nx show projects --affected)
+                  OUTPUT=$(echo $affected)
+                  echo "::set-output name=affected::$OUTPUT"
+
+            - name: Report affected over the PR
+              uses: actions/github-script@v7
+              with:
+                  github-token: ${{secrets.GITHUB_TOKEN}}
+                  script: |
+                      const affectedProjectsStr = `${{steps.affected-projects.outputs.affected}}`.trim();
+                      const affectedProjects = affectedProjectsStr.split(' ').filter(Boolean);
+
+                      let res = affectedProjects.map(p => `- ${p}`).join('\n');
+                      if (!affectedProjects.length || !res) {
+                          res = '### No affected projects have been found.';
+                      }
+
+                      const AFFECTED_PROJECTS_HEADER = '## 📝 Nx Affected Report';
+                      const body = [AFFECTED_PROJECTS_HEADER, res].join('\n');
+
+                      // get last comment
+                      const comments = await github.rest.issues.listComments({
+                          issue_number: context.issue.number,
+                          owner: context.repo.owner,
+                          repo: context.repo.repo
+                      });
+
+                      // find comments to delete
+                      const commentsToDelete = comments.data.filter((comment) =>
+                          comment.body.startsWith(AFFECTED_PROJECTS_HEADER)
+                      );
+
+                      // delete comments
+                      const prms = commentsToDelete.map((comment) =>
+                          github.rest.issues.deleteComment({
+                              comment_id: comment.id,
+                              owner: context.repo.owner,
+                              repo: context.repo.repo
+                          })
+                      );
+
+                      await Promise.all(prms);
+
+                      // create new comment for release note
+                      github.rest.issues.createComment({
+                          issue_number: context.issue.number,
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          body
+                      });
