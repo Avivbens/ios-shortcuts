@@ -1,10 +1,9 @@
 ---
-name: '📦 Create New Release'
+name: '🔢 Update Shortcuts Versions'
 
 on:
-    push:
-        branches:
-            - master
+    release:
+        types: [published]
 
 permissions:
     contents: write
@@ -13,33 +12,14 @@ permissions:
     deployments: write
 
 concurrency:
-    group: release-master-${{ github.workflow }}-${{ github.ref }}
+    group: update-shortcuts-${{ github.workflow }}-${{ github.ref }}
     cancel-in-progress: true
 
 jobs:
-    checks:
-        name: ✅ Check for Release
-        runs-on: ubuntu-latest
-        timeout-minutes: 15
-
-        env:
-            HUSKY: 0
-
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
-
-            - name: 🧪 Check out repository code
-              uses: ./.github/workflows/health-check
-
-    release:
-        name: 📦 Release Version
+    update:
+        name: 🔢 Update Versions
         runs-on: ubuntu-latest
         timeout-minutes: 60
-        needs:
-            - checks
 
         env:
             HUSKY: 0
@@ -64,7 +44,11 @@ jobs:
               uses: nrwl/nx-set-shas@v4
               with: { main-branch-name: 'master' }
 
-            - name: Release
+            - name: Update Shortcuts Versions
+              run: |
+                  node scripts/update-packages-versions.js
+
+            - name: Commit and Push Changes
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   GIT_AUTHOR_NAME: github-actions[bot]
@@ -72,4 +56,6 @@ jobs:
                   GIT_COMMITTER_NAME: github-actions[bot]
                   GIT_COMMITTER_EMAIL: github-actions[bot]@users.noreply.github.com
               run: |
-                  npx nx release
+                  git add .
+                  git commit -m "chore: update shortcuts versions [skip ci]"
+                  git push origin HEAD:${{ github.ref }}
