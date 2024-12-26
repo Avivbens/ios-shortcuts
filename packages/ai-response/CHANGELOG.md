@@ -1,3 +1,13 @@
+## 0.2.0 (2024-12-26)
+
+### 🚀 Features
+
+- **ai-response:** support versioning system ([ef2430e](https://github.com/Avivbens/ios-shortcuts/commit/ef2430e))
+
+### ❤️ Thank You
+
+- Aviv Ben Shahar
+
 ## 0.1.1 (2024-12-26)
 
 ### 🩹 Fixes
