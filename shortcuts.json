@@ -1,3 +1,6 @@
 {
-    "ai-response": "0.1.0"
+    "ai-response": {
+        "version": "0.1.0",
+        "download": "https://github.com/Avivbens/ios-shortcuts/raw/refs/heads/master/packages/ai-response/src/AI%20Response.shortcut"
+    }
 }

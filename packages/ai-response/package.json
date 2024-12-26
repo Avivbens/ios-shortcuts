@@ -15,7 +15,8 @@
                     "packageJson": "packages/ai-response/package.json",
                     "updateBuildableProjectDepsInPackageJson": false,
                     "updateBuildableProjectDepsInWorkspace": false,
-                    "showOutputPath": true
+                    "showOutputPath": true,
+                    "download": "src/AI Response.shortcut"
                 }
             }
         }

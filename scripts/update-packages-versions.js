@@ -7,6 +7,7 @@ const { cwd } = require('node:process')
 const { FsTree } = require('nx/src/generators/tree')
 
 const SHORTCUTS_FILE = join(cwd(), 'shortcuts.json')
+const DOWNLOAD_URL = `https://github.com/Avivbens/ios-shortcuts/raw/refs/heads/master/packages`
 
 const tree = new FsTree(workspaceRoot, false)
 const projectsMap = getProjects(tree)
@@ -33,13 +34,18 @@ function readProjectPackageJson(packageJsonFile) {
             const packageJsonObj = readProjectPackageJson(packageJsonFile)
 
             const version = packageJsonObj.version
+            const downloadAsset = packageJsonObj.nx.targets['nx-release-publish']?.options?.download
             console.log(`Project ${project.name} version: ${version}`)
 
-            acc[projectName] = version
+            const downloadLink = new URL(`${DOWNLOAD_URL}/${projectName}/${downloadAsset}`)
+            acc[projectName] = {
+                version,
+                download: downloadLink.href,
+            }
             return acc
         }, {})
 
-        await writeFile(SHORTCUTS_FILE, JSON.stringify(shortcuts, null, 2))
+        await writeFile(SHORTCUTS_FILE, JSON.stringify(shortcuts, null, 4))
         console.log(`Shortcuts file updated at ${SHORTCUTS_FILE}`)
     } catch (error) {
         console.error(error.stack)
