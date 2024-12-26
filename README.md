@@ -1,90 +1,89 @@
-# IosShortcuts
+<div align="center">
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+# iOS Shortcuts Monorepo
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+![iOS](https://img.shields.io/badge/Platform-iOS-blue.svg)
+![Automation](https://img.shields.io/badge/Focus-Automation-lightgrey.svg)
+![Status](https://img.shields.io/badge/Status-Active-success.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/kcao7snkgx)
 
-## Finish your CI setup
+> A comprehensive monorepo containing various **iOS Shortcuts**. Designed to streamline, automate, and enhance everyday tasks on iOS devices.
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/mhX4Hhuv2n)
+</div>
 
+---
 
-## Generate a library
+## Table of Contents
 
-```sh
-npx nx g @nx/js:lib packages/pkg1 --publishable --importPath=@my-org/pkg1
-```
+1. [Shortcuts](#shortcuts)
+1. [About the Repository](#about-the-repository)
+1. [Features](#features)
+1. [Usage](#usage)
+1. [Contributing](#contribContributing)
+1. [License](#license)
+1. [Contact](#contact)
 
-## Run tasks
+---
 
-To build the library use:
+## Shortcuts
 
-```sh
-npx nx build pkg1
-```
+| Shortcut                                          | Description                                                     | Author                                                                    | Download                                                    |
+| ------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| [**AI Response**](packages/ai-response/README.md) | Get AI suggestions for your current chat (support any chat app) | [Aviv Ben Shahar](https://www.linkedin.com/in/aviv-ben-shahar-33583b211/) | [Download](packages/ai-response/src/AI%20Response.shortcut) |
 
-To run any task with Nx use:
+---
 
-```sh
-npx nx <target> <project-name>
-```
+## About the Repository
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+This repository serves as a **monorepo** for all of my iOS Shortcuts. By keeping them in one place, it becomes easier to manage version control, updates, and seamless distribution. Whether you're looking to automate your day-to-day tasks, explore productivity enhancements, or unlock new iOS features, you'll find a shortcut that suits your needs here.
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+---
 
-## Versioning and releasing
+## Features
 
-To version and release the library use
+- **Automation**: Replace repetitive tasks with single-tap or Siri-triggered shortcuts.
+- **Modular**: Each shortcut is self-contained, making it easy to add, remove, or update.
+- **Scalable**: Continuously add new shortcuts without cluttering your workspace.
+- **Version Control**: Track changes over time and roll back if needed.
+- **Cross-Device Compatibility**: Works seamlessly across iPhones and iPads.
 
-```
-npx nx release
-```
+---
 
-Pass `--dry-run` to see what would happen without actually releasing the library.
+## Usage
 
-[Learn more about Nx release &raquo;](hhttps://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+1. **Select your desire shortcut** under the [packages](packages) directory.
+2. **Download the shortcut** located under the `src` directory.
+    - Tap the download link.
+    - Open the shortcut in the Shortcuts app.
+    - Review the actions and customize as needed.
+    - Save the shortcut to your library.
+3. **Run the shortcut**:
 
-## Keep TypeScript project references up to date
+    - Tap the shortcut tile.
+    - Invoke it via Siri by using the shortcut's name.
+    - Add it to the Home Screen for quick access.
 
-Nx automatically updates TypeScript [project references](https://www.typescriptlang.org/docs/handbook/project-references.html) in `tsconfig.json` files to ensure they remain accurate based on your project dependencies (`import` or `require` statements). This sync is automatically done when running tasks such as `build` or `typecheck`, which require updated references to function correctly.
+---
 
-To manually trigger the process to sync the project graph dependencies information to the TypeScript project references, run the following command:
+## Contributing
 
-```sh
-npx nx sync
-```
+Good to know that you want to contribute to this project! 🎉
 
-You can enforce that the TypeScript project references are always in the correct state when running in CI by adding a step to your CI job configuration that runs the following command:
+See [CONTRIBUTING.md](CONTRIBUTING.md)
 
-```sh
-npx nx sync:check
-```
+## License
 
-[Learn more about nx sync](https://nx.dev/reference/nx-commands#sync)
+This repository is released under the [MIT License](LICENSE).
+You're free to use, modify, and distribute the code within your own projects.
 
+---
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## Contact
 
-## Install Nx Console
+- **GitHub**: [Avivbens](https://github.com/avivbens)
+- **Email**: [avivbens87@gmail.com](mailto:avivbens87@gmail.com)
+- **LinkedIn**: [Aviv Ben Shahar](https://www.linkedin.com/in/aviv-ben-shahar-33583b211/)
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Feel free to reach out if you have any questions, suggestions, or requests.
