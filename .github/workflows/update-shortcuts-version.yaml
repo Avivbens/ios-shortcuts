@@ -67,4 +67,4 @@ jobs:
               run: |
                   git add .
                   git commit -m "chore: update shortcuts versions [skip ci]"
-                  git push origin HEAD:${{ github.ref }}
+                  git push origin master

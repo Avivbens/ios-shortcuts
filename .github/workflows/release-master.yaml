@@ -65,6 +65,8 @@ jobs:
               with: { main-branch-name: 'master' }
 
             - name: Release
+              timeout-minutes: 2
+              continue-on-error: true
               env:
                   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
                   GIT_AUTHOR_NAME: github-actions[bot]
