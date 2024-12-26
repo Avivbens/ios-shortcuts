@@ -29,6 +29,9 @@
         "projects": ["packages/*"],
         "projectsRelationship": "independent",
         "releaseTagPattern": "release/{projectName}/{version}",
+        "git": {
+            "commitMessage": "chore(release): release {version} [skip ci]"
+        },
         "version": {
             "conventionalCommits": true
         },

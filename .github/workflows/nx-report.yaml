@@ -4,7 +4,7 @@ name: Nx Affected Report 📝
 on:
     pull_request:
         paths:
-            - 'projects/**/*'
+            - 'packages/**/*'
             - '.github/workflows/nx-report.yaml'
         branches:
             - master
