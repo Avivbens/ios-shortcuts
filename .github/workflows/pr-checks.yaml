@@ -1,0 +1,25 @@
+---
+name: PR Health Checks 🐛
+on:
+    pull_request:
+        branches:
+            - master
+
+permissions:
+    contents: read
+    pull-requests: read
+    issues: read
+
+jobs:
+    PR-checks:
+        # https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/using-self-hosted-runners-in-a-workflow
+        runs-on: ubuntu-latest
+        name: PR Health Checks 🐛
+        steps:
+            - name: 📀 Checkout
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 1
+
+            - name: 🧪 Check out repository code
+              uses: ./.github/workflows/health-check

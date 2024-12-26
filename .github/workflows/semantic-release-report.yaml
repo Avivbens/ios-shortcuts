@@ -1,0 +1,98 @@
+---
+name: Semantic Release Report 📝
+on:
+    pull_request:
+        branches:
+            - master_1
+
+permissions:
+    contents: write
+    issues: write
+    pull-requests: write
+
+jobs:
+    PR-checks:
+        # https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/using-self-hosted-runners-in-a-workflow
+        runs-on: ubuntu-latest
+        name: Semantic Release Report 📝
+        steps:
+            - name: 📀 Checkout
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: 🖥️ Setup Env
+              uses: ./.github/workflows/install
+
+            - name: 🔬 Check Semantic Versioning
+              id: semantic-release
+              run: |
+                  GITHUB_REF=${{ github.head_ref }}
+                  npx semantic-release --no-ci --dry-run --plugins @semantic-release/commit-analyzer,@semantic-release/release-notes-generator --branches ${{ github.head_ref }} > output.txt
+                  REPORT=$(cat output.txt | base64 -w 0)
+
+                  VERSION=$(cat output.txt | \
+                  grep "The next release version is" | \
+                  node -e "console.log(require('fs').readFileSync(0, 'utf-8').match(/The next release version is (\d+\.\d+\.\d+(-beta\.\d+)?)/)?.[1] ?? '')")
+
+                  echo "releaseNote=$REPORT" >> $GITHUB_OUTPUT
+                  echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+            - name: 📝 Report semantic versioning
+              uses: actions/github-script@v7
+              if: ${{ steps.semantic-release.outputs.releaseNote != '' }}
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  script: |
+                      // build release note
+                      const semanticReleaseOutput = Buffer.from('${{ steps.semantic-release.outputs.releaseNote }}', 'base64').toString('utf8');
+                      const semanticReleaseLogMatch = /^[[0-9:\sAMPM]+\]\s\[semantic-release\].*$/;
+                      const lines = semanticReleaseOutput.split('\n');
+                      const lastSemanticReleaseLogIndex = [...lines]
+                          .reverse()
+                          .findIndex((line) => line.match(semanticReleaseLogMatch));
+
+                      const nextVersion = '${{ steps.semantic-release.outputs.version }}';
+
+                      const releaseNoteIndex = lines.length - lastSemanticReleaseLogIndex;
+                      const releaseNote = lines.slice(releaseNoteIndex);
+
+                      let res = releaseNote.join('\n');
+                      if (!releaseNote.length || !res) {
+                          res = '### No release note would be generated.';
+                      }
+
+                      const SEMANTIC_RELEASE_BODY_HEADER = '## 📝 Semantic Release Report';
+                      const NEXT_VERSION_HEADER = `### 🚀 Next Version: ${nextVersion}`;
+                      const body = [SEMANTIC_RELEASE_BODY_HEADER, NEXT_VERSION_HEADER, res].join('\n');
+
+                      // get last comment
+                      const comments = await github.rest.issues.listComments({
+                          issue_number: context.issue.number,
+                          owner: context.repo.owner,
+                          repo: context.repo.repo
+                      });
+
+                      // find comments to delete
+                      const commentsToDelete = comments.data.filter((comment) =>
+                          comment.body.startsWith(SEMANTIC_RELEASE_BODY_HEADER)
+                      );
+
+                      // delete comments
+                      const prms = commentsToDelete.map((comment) =>
+                          github.rest.issues.deleteComment({
+                              comment_id: comment.id,
+                              owner: context.repo.owner,
+                              repo: context.repo.repo
+                          })
+                      );
+
+                      await Promise.all(prms);
+
+                      // create new comment for release note
+                      github.rest.issues.createComment({
+                          issue_number: context.issue.number,
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          body
+                      });

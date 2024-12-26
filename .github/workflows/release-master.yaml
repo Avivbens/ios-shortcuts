@@ -1,0 +1,74 @@
+---
+name: '📦 Create New Release'
+
+on:
+    push:
+        branches:
+            - master
+
+permissions:
+    contents: write
+    pull-requests: write
+    issues: write
+    deployments: write
+
+concurrency:
+    group: release-master-${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    checks:
+        name: ✅ Check for Release
+        runs-on: ubuntu-latest
+        timeout-minutes: 15
+
+        env:
+            HUSKY: 0
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 1
+
+            - name: 🧪 Check out repository code
+              uses: ./.github/workflows/health-check
+
+    release:
+        name: 📦 Release Version
+        runs-on: ubuntu-latest
+        timeout-minutes: 60
+        needs:
+            - checks
+
+        env:
+            HUSKY: 0
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+                  persist-credentials: false
+
+            - name: Git Config
+              run: |
+                  git config --global user.name "github-bot"
+                  git config --global user.email "github-bot@gmail.com"
+
+            - name: 🖥️ Setup Env
+              uses: ./.github/workflows/install
+
+            - name: 'Derive appropriate SHAs for base and head for `nx affected` commands'
+              uses: nrwl/nx-set-shas@v4
+              with: { main-branch-name: 'master' }
+
+            - name: Release
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+                  GIT_AUTHOR_NAME: github-bot
+                  GIT_AUTHOR_EMAIL: github-bot@gmail.com
+                  GIT_COMMITTER_NAME: github-bot
+                  GIT_COMMITTER_EMAIL: github-bot@gmail.com
+              run: |
+                  npx nx affected --target release

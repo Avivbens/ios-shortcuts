@@ -1,0 +1,58 @@
+---
+name: '☑️ Checks Pipeline'
+description: 'Checks the codebase health'
+
+inputs:
+    run-tests-command:
+        description: 'Run tests command, default is `npm test`'
+        default: 'npm test'
+        required: false
+
+    run-tests:
+        description: 'Run tests'
+        default: 'true'
+        required: false
+
+    run-lint-command:
+        description: 'Run linter command, default is `npm run lint`'
+        default: 'npm run lint'
+        required: false
+
+    run-lint:
+        description: 'Run lint'
+        default: 'true'
+        required: false
+
+    run-build-command:
+        description: 'Run build command, default is `npm run build`'
+        default: 'npm run build'
+        required: false
+
+    run-build:
+        description: 'Run build'
+        default: 'true'
+        required: false
+
+runs:
+    using: composite
+    steps:
+        - name: 🖥️ Setup Env
+          uses: ./.github/workflows/install
+
+        - name: 🧪 Test
+          if: ${{ inputs.run-tests == 'true' }}
+          shell: bash
+          run: |
+              ${{ inputs.run-tests-command }}
+
+        - name: 🔨 Build
+          if: ${{ inputs.run-build == 'true' }}
+          shell: bash
+          run: |
+              ${{ inputs.run-build-command }}
+
+        - name: ✅ Lint
+          if: ${{ inputs.run-lint == 'true' }}
+          shell: bash
+          run: |
+              ${{ inputs.run-lint-command }}
