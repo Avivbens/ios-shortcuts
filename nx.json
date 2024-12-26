@@ -5,7 +5,6 @@
         "production": ["default", "!{projectRoot}/.eslintrc.json", "!{projectRoot}/eslint.config.cjs"],
         "sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml"]
     },
-    "nxCloudId": "67697af15ad9512e8f4cf910",
     "plugins": [
         {
             "plugin": "@nx/js/typescript",
