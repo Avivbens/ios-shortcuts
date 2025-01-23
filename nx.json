@@ -37,14 +37,18 @@
         },
         "changelog": {
             "workspaceChangelog": { "createRelease": "github" },
-            "projectChangelogs": { "createRelease": "github" },
-            "version": {
-                "conventionalCommits": {
-                    "types": {
-                        "docs": {
-                            "semverBump": "none"
-                        }
-                    }
+            "projectChangelogs": { "createRelease": "github" }
+        },
+        "conventionalCommits": {
+            "types": {
+                "docs": {
+                    "semverBump": "patch"
+                },
+                "feat": {
+                    "semverBump": "none"
+                },
+                "fix": {
+                    "semverBump": "none"
                 }
             }
         }
