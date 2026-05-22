@@ -35,7 +35,7 @@
 
 ## Overview
 
-The **Translate Text Shortcut** is an iOS shortcut that translates text into your chosen language using AI. It accepts input from the **Share Sheet**, falls back to the **clipboard**, or lets you type text manually. Pick a target language and the shortcut returns the translation — ready to copy, share, or read aloud.
+The **Translate Text Shortcut** is an iOS shortcut that translates text into your chosen language using AI. It accepts input from the **Share Sheet**, falls back to the **clipboard**, or lets you type text manually. Pick a target language and the shortcut returns the translation — ready to copy and share.
 
 ---
 
