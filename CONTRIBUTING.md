@@ -15,6 +15,27 @@ To get started, follow these steps:
 
 **Commit your changes, like `fix(shortcut): <Explain>`, and open a PR 🎉**
 
+## Exporting a Shortcut Binary
+
+When adding or updating a shortcut, you need to export the `.shortcut` file from the Shortcuts app and place it under the package's `src/` directory (e.g. `packages/<shortcut-name>/src/<Shortcut Name>.shortcut`).
+
+### On macOS
+
+1. Open the **Shortcuts** app.
+1. Single-click the shortcut tile so it's highlighted (don't open it for editing).
+1. From the menu bar, choose **File → Export…**.
+1. Save the file as `<Shortcut Name>.shortcut` and move it into the package's `src/` directory.
+
+> Alternatives if **File → Export…** is unavailable: drag the shortcut tile directly onto the Desktop / a Finder window, or right-click → **Share → AirDrop** to yourself.
+
+### On iOS / iPadOS
+
+1. Open the **Shortcuts** app.
+1. Long-press the shortcut → **Share** → **Save to Files**.
+1. Pick iCloud Drive (or any synced location) and move the file into the package's `src/` directory on your Mac.
+
+Make sure the filename matches the `download` path declared in the package's `package.json` (under `nx.targets.nx-release-publish.options.download`).
+
 ## Commit Message Guidelines
 
 We follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification. Make sure your commit messages follow the format below:
