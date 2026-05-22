@@ -2,5 +2,9 @@
     "ai-response": {
         "version": "0.2.2",
         "download": "https://github.com/Avivbens/ios-shortcuts/raw/refs/heads/master/packages/ai-response/src/AI%20Response.shortcut"
+    },
+    "translate-text": {
+        "version": "0.2.3",
+        "download": "https://github.com/Avivbens/ios-shortcuts/raw/refs/heads/master/packages/translate-text/src/Translate%20Text.shortcut"
     }
 }

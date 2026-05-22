@@ -29,9 +29,10 @@
 
 ## Shortcuts
 
-| Shortcut                                          | Description                                                     | Author                                                                    | Download                                                                                                                    |
-| ------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| [**AI Response**](packages/ai-response/README.md) | Get AI suggestions for your current chat (support any chat app) | [Aviv Ben Shahar](https://www.linkedin.com/in/aviv-ben-shahar-33583b211/) | [Download](https://github.com/Avivbens/ios-shortcuts/raw/refs/heads/master/packages/ai-response/src/AI%20Response.shortcut) |
+| Shortcut                                                | Description                                                                  | Author                                                                    | Download                                                                                                                          |
+| ------------------------------------------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| [**AI Response**](packages/ai-response/README.md)       | Get AI suggestions for your current chat (support any chat app)              | [Aviv Ben Shahar](https://www.linkedin.com/in/aviv-ben-shahar-33583b211/) | [Download](https://github.com/Avivbens/ios-shortcuts/raw/refs/heads/master/packages/ai-response/src/AI%20Response.shortcut)       |
+| [**Translate Text**](packages/translate-text/README.md) | Translate text from the Share Sheet, clipboard, or free-style input using AI | [Aviv Ben Shahar](https://www.linkedin.com/in/aviv-ben-shahar-33583b211/) | [Download](https://github.com/Avivbens/ios-shortcuts/raw/refs/heads/master/packages/translate-text/src/Translate%20Text.shortcut) |
 
 ---
 
