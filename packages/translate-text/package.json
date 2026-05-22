@@ -1,0 +1,24 @@
+{
+    "name": "@ios-shortcuts/translate-text",
+    "version": "0.2.2",
+    "dependencies": {},
+    "main": "./src/index.ts",
+    "types": "./src/index.ts",
+    "private": true,
+    "nx": {
+        "sourceRoot": "translate-text/src",
+        "projectType": "library",
+        "name": "translate-text",
+        "targets": {
+            "nx-release-publish": {
+                "options": {
+                    "packageJson": "packages/translate-text/package.json",
+                    "updateBuildableProjectDepsInPackageJson": false,
+                    "updateBuildableProjectDepsInWorkspace": false,
+                    "showOutputPath": true,
+                    "download": "src/Translate Text.shortcut"
+                }
+            }
+        }
+    }
+}
