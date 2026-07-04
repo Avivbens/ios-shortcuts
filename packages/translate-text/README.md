@@ -93,6 +93,8 @@ The **Translate Text Shortcut** is an iOS shortcut that translates text into you
 1. **Get the Translation**
     - The shortcut returns the translated text for you to copy, share, or use further.
 
+> **Tip:** Add the shortcut to your Home Screen or a widget for one-tap translation without opening the Shortcuts app.
+
 ---
 
 ## Supported Languages
