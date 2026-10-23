@@ -13,4 +13,8 @@ runs:
     - name: 🔗 Install Dependencies
       shell: bash
       run: |
-        npm ci --no-fund --no-audit --no-progress
+        npm ci --no-fund --no-audit --no-progress --ignore-scripts
+
+    - name: 'Derive appropriate SHAs for base and head for `nx affected` commands'
+      uses: nrwl/nx-set-shas@v4
+      with: { main-branch-name: 'master' }

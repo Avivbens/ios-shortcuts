@@ -1,0 +1,35 @@
+---
+name: PR Health Checks 🐛
+on: pull_request
+
+permissions:
+  contents: read
+  actions: read
+  pull-requests: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  PR-checks:
+    runs-on: ubuntu-latest
+    name: PR Health Checks 🐛
+    steps:
+      - name: 📀 Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🖥️ Setup Env
+        uses: ./.github/workflows/install
+
+      - name: 🧪 Check out repository code
+        uses: ./.github/workflows/health-check
+        with:
+          run-tests: true
+          run-tests-command: 'npx nx affected --target=test --parallel'
+          run-lint: true
+          run-lint-command: 'npx nx affected --target=lint --parallel'
+          run-build: true
+          run-build-command: 'npx nx affected --target=build --parallel'

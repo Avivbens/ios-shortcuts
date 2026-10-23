@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  actions: read
   pull-requests: write
   issues: write
   deployments: write
@@ -33,6 +34,13 @@ jobs:
 
       - name: 🧪 Check out repository code
         uses: ./.github/workflows/health-check
+        with:
+          run-tests: true
+          run-tests-command: 'npx nx affected --target=test --parallel'
+          run-lint: false
+          run-lint-command: 'npx nx affected --target=lint --parallel'
+          run-build: true
+          run-build-command: 'npx nx affected --target=build --parallel'
 
   release:
     name: 📦 Release Version
@@ -59,10 +67,6 @@ jobs:
 
       - name: 🖥️ Setup Env
         uses: ./.github/workflows/install
-
-      - name: 'Derive appropriate SHAs for base and head for `nx affected` commands'
-        uses: nrwl/nx-set-shas@v4
-        with: { main-branch-name: 'master' }
 
       - name: Release
         timeout-minutes: 2
