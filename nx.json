@@ -20,12 +20,6 @@
   "plugins": [
     "@ios-shortcuts/workspace",
     {
-      "plugin": "@nx/eslint/plugin",
-      "options": {
-        "targetName": "lint"
-      }
-    },
-    {
       "plugin": "@nx/vitest",
       "options": {
         "testTargetName": "test",
@@ -34,6 +28,19 @@
     }
   ],
   "targetDefaults": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "inputs": ["default", "^default", "{workspaceRoot}/eslint.config.mjs", "{workspaceRoot}/.prettierrc"],
+      "cache": true,
+      "configurations": {
+        "fix": {
+          "fix": true
+        }
+      },
+      "options": {
+        "lintFilePatterns": ["{projectRoot}/src/**/*.ts"]
+      }
+    },
     "test": {
       "inputs": ["default", "^default", "{workspaceRoot}/vitest.shared.mts"]
     }
