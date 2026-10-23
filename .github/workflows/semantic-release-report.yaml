@@ -3,86 +3,86 @@ name: Semantic Release Report 📝
 on: pull_request
 
 permissions:
-    contents: write
-    issues: write
-    pull-requests: write
+  contents: write
+  issues: write
+  pull-requests: write
 
 jobs:
-    PR-checks:
-        # https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/using-self-hosted-runners-in-a-workflow
-        runs-on: ubuntu-latest
-        name: Semantic Release Report 📝
-        steps:
-            - name: 📀 Checkout
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
+  PR-checks:
+    # https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/using-self-hosted-runners-in-a-workflow
+    runs-on: ubuntu-latest
+    name: Semantic Release Report 📝
+    steps:
+      - name: 📀 Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-            - name: 🖥️ Setup Env
-              uses: ./.github/workflows/install
+      - name: 🖥️ Setup Env
+        uses: ./.github/workflows/install
 
-            - name: 🔬 Check Semantic Versioning
-              id: semantic-release
-              run: |
-                  npx nx release --dry-run > output.txt
-                  REPORT=$(cat output.txt | base64 -w 0)
+      - name: 🔬 Check Semantic Versioning
+        id: semantic-release
+        run: |
+          npx nx release --dry-run > output.txt
+          REPORT=$(cat output.txt | base64 -w 0)
 
-                  echo "releaseNote=$REPORT" >> $GITHUB_OUTPUT
+          echo "releaseNote=$REPORT" >> $GITHUB_OUTPUT
 
-            - name: 📝 Report semantic versioning
-              uses: actions/github-script@v7
-              if: ${{ steps.semantic-release.outputs.releaseNote != '' }}
-              with:
-                  github-token: ${{ secrets.GITHUB_TOKEN }}
-                  script: |
-                      // build release note
-                      const semanticReleaseOutput = Buffer.from('${{ steps.semantic-release.outputs.releaseNote }}', 'base64').toString('utf8');
-                      const semanticReleaseLogMatch = /^.*Creating GitHub Release$/;
-                      const semanticReleaseEndLogMatch = /^.*Skipped publishing packages\.$/;
-                      const lines = semanticReleaseOutput.split('\n');
-                      const lastSemanticReleaseLogIndex = lines
-                          .findIndex((line) => line.match(semanticReleaseLogMatch));
+      - name: 📝 Report semantic versioning
+        uses: actions/github-script@v7
+        if: ${{ steps.semantic-release.outputs.releaseNote != '' }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            // build release note
+            const semanticReleaseOutput = Buffer.from('${{ steps.semantic-release.outputs.releaseNote }}', 'base64').toString('utf8');
+            const semanticReleaseLogMatch = /^.*Creating GitHub Release$/;
+            const semanticReleaseEndLogMatch = /^.*Skipped publishing packages\.$/;
+            const lines = semanticReleaseOutput.split('\n');
+            const lastSemanticReleaseLogIndex = lines
+                .findIndex((line) => line.match(semanticReleaseLogMatch));
 
-                      const lastSemanticReleaseEndLogIndex = lines
-                          .findIndex((line) => line.match(semanticReleaseEndLogMatch));
+            const lastSemanticReleaseEndLogIndex = lines
+                .findIndex((line) => line.match(semanticReleaseEndLogMatch));
 
-                      const releaseNote = lines.slice(lastSemanticReleaseLogIndex + 1, lastSemanticReleaseEndLogIndex);
+            const releaseNote = lines.slice(lastSemanticReleaseLogIndex + 1, lastSemanticReleaseEndLogIndex);
 
-                      let res = releaseNote.join('\n');
-                      if (!releaseNote.length || !res) {
-                          res = '### No release note would be generated.';
-                      }
+            let res = releaseNote.join('\n');
+            if (!releaseNote.length || !res) {
+                res = '### No release note would be generated.';
+            }
 
-                      const SEMANTIC_RELEASE_BODY_HEADER = '## 📝 Semantic Release Report';
-                      const body = [SEMANTIC_RELEASE_BODY_HEADER, res].join('\n');
+            const SEMANTIC_RELEASE_BODY_HEADER = '## 📝 Semantic Release Report';
+            const body = [SEMANTIC_RELEASE_BODY_HEADER, res].join('\n');
 
-                      // get last comment
-                      const comments = await github.rest.issues.listComments({
-                          issue_number: context.issue.number,
-                          owner: context.repo.owner,
-                          repo: context.repo.repo
-                      });
+            // get last comment
+            const comments = await github.rest.issues.listComments({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo
+            });
 
-                      // find comments to delete
-                      const commentsToDelete = comments.data.filter((comment) =>
-                          comment.body.startsWith(SEMANTIC_RELEASE_BODY_HEADER)
-                      );
+            // find comments to delete
+            const commentsToDelete = comments.data.filter((comment) =>
+                comment.body.startsWith(SEMANTIC_RELEASE_BODY_HEADER)
+            );
 
-                      // delete comments
-                      const prms = commentsToDelete.map((comment) =>
-                          github.rest.issues.deleteComment({
-                              comment_id: comment.id,
-                              owner: context.repo.owner,
-                              repo: context.repo.repo
-                          })
-                      );
+            // delete comments
+            const prms = commentsToDelete.map((comment) =>
+                github.rest.issues.deleteComment({
+                    comment_id: comment.id,
+                    owner: context.repo.owner,
+                    repo: context.repo.repo
+                })
+            );
 
-                      await Promise.all(prms);
+            await Promise.all(prms);
 
-                      // create new comment for release note
-                      github.rest.issues.createComment({
-                          issue_number: context.issue.number,
-                          owner: context.repo.owner,
-                          repo: context.repo.repo,
-                          body
-                      });
+            // create new comment for release note
+            github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body
+            });
