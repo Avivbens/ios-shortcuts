@@ -7,6 +7,7 @@ This table shows the current support over the CLI versions:
 <!-- prettier-ignore -->
 | Version   | Supported          |
 | --------- | ------------------ |
+
 <!-- | <= 2.10.x | :x:                | -->
 
 ## Reporting a Vulnerability
