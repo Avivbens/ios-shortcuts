@@ -6,3 +6,6 @@ export const VERSION_VARIABLE = 'shortcutVersion';
 
 /** The `shortcuts.json` key an installed copy looks itself up by - it must stay the project name. */
 export const NAME_VARIABLE = 'shortcutName';
+
+/** Per-shortcut settings that are not part of the workflow, such as its display name. */
+export const SHORTCUT_CONFIG_FILE = 'shortcut.config.ts';
