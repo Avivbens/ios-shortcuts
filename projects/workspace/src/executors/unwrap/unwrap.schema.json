@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "version": 2,
+  "title": "Unwrap Shortcut Options",
+  "type": "object",
+  "properties": {
+    "input": {
+      "type": "string",
+      "description": "Signed .shortcut file to unwrap into shortcut.plist, relative to the project root"
+    }
+  },
+  "required": ["input"]
+}

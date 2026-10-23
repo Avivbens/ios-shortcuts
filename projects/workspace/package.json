@@ -6,5 +6,6 @@
   "dependencies": {
     "@ios-shortcuts/builder": "workspace:*"
   },
+  "executors": "./executors.json",
   "generators": "./generators.json"
 }
