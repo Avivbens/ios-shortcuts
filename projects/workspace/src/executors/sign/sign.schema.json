@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "version": 2,
+  "title": "Sign Shortcut Options",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Version of the build to sign, forwarded to build; defaults to the project's package.json version"
+    }
+  },
+  "required": []
+}
