@@ -1,4 +1,4 @@
 {
-    "extends": "./tsconfig.base.json",
-    "compileOnSave": false
+  "extends": "./tsconfig.base.json",
+  "compileOnSave": false
 }
