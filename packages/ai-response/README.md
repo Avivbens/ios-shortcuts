@@ -61,8 +61,8 @@ The **AI Chat Suggestions Shortcut** is an iOS shortcut that provides intelligen
 
 1. **Download / Import the Shortcut**
 
-    - [Click here to download](#download) the shortcut.
-    - When prompted, open it in the **Shortcuts** app.
+   - [Click here to download](#download) the shortcut.
+   - When prompted, open it in the **Shortcuts** app.
 
 ---
 
@@ -70,28 +70,28 @@ The **AI Chat Suggestions Shortcut** is an iOS shortcut that provides intelligen
 
 1. **Open Your Chat Application**
 
-    - Navigate to the conversation you want to respond to.
+   - Navigate to the conversation you want to respond to.
 
 1. **Trigger the Shortcut**
 
-    - Run the **AI Chat Suggestions** shortcut from the Shortcuts app, a widget, or Siri voice command.
+   - Run the **AI Chat Suggestions** shortcut from the Shortcuts app, a widget, or Siri voice command.
 
 1. **Take/Select a Screenshot**
 
-    - The shortcut will prompt you to capture or select a screenshot of the conversation to analyze.
+   - The shortcut will prompt you to capture or select a screenshot of the conversation to analyze.
 
 1. **Pick a Tone**
 
-    - Choose from predefined tones like _natural_, _casual_, _professional_, etc.
+   - Choose from predefined tones like _natural_, _casual_, _professional_, etc.
 
 1. **Review AI Suggestions**
 
-    - Wait a few seconds while the shortcut analyzes the conversation.
-    - You’ll see multiple AI-generated responses (the exact number can be configured).
+   - Wait a few seconds while the shortcut analyzes the conversation.
+   - You’ll see multiple AI-generated responses (the exact number can be configured).
 
 1. **Select & Paste**
-    - Pick the response you like best, and the shortcut will copy it to your clipboard.
-    - Simply paste it back into the chat.
+   - Pick the response you like best, and the shortcut will copy it to your clipboard.
+   - Simply paste it back into the chat.
 
 ---
 
@@ -99,7 +99,7 @@ The **AI Chat Suggestions Shortcut** is an iOS shortcut that provides intelligen
 
 1. **Number of Suggestions**
 
-    - By default, the shortcut provides 5 suggestions. You can change this in the shortcut’s configuration steps to generate fewer or more.
+   - By default, the shortcut provides 5 suggestions. You can change this in the shortcut’s configuration steps to generate fewer or more.
 
 ---
 
