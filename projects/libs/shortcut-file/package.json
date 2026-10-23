@@ -5,6 +5,7 @@
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "dependencies": {
-    "@ios-shortcuts/shortcut-plist": "workspace:*"
+    "@ios-shortcuts/shortcut-plist": "workspace:*",
+    "@ios-shortcuts/utils": "workspace:*"
   }
 }

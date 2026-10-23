@@ -266,8 +266,13 @@ importers:
       '@ios-shortcuts/shortcut-plist':
         specifier: workspace:*
         version: link:../shortcut-plist
+      '@ios-shortcuts/utils':
+        specifier: workspace:*
+        version: link:../utils
 
   projects/libs/shortcut-plist: {}
+
+  projects/libs/utils: {}
 
   projects/packages/ai-response: {}
 
