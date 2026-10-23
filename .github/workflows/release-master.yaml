@@ -49,13 +49,13 @@ jobs:
               uses: actions/checkout@v4
               with:
                   fetch-depth: 0
-                  persist-credentials: false
+                  # Push over SSH so the release commit and tags go through the deploy key, a ruleset bypass actor
+                  ssh-key: ${{ secrets.RELEASE_DEPLOY_KEY }}
 
             - name: Git Config
               run: |
                   git config --global user.name "github-actions[bot]"
                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
-                  git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}
 
             - name: 🖥️ Setup Env
               uses: ./.github/workflows/install
@@ -68,6 +68,7 @@ jobs:
               timeout-minutes: 2
               continue-on-error: true
               env:
+                  # A PAT, not the built-in token - releases it creates must still trigger update-shortcuts-version
                   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
                   GIT_AUTHOR_NAME: github-actions[bot]
                   GIT_AUTHOR_EMAIL: github-actions[bot]@users.noreply.github.com
