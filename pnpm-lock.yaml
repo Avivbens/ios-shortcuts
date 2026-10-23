@@ -293,7 +293,11 @@ importers:
 
   projects/packages/translate-text: {}
 
-  projects/workspace: {}
+  projects/workspace:
+    dependencies:
+      '@ios-shortcuts/builder':
+        specifier: workspace:*
+        version: link:../libs/builder
 
 packages:
 
