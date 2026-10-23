@@ -38,6 +38,7 @@
         "@types/node": "18.16.9",
         "eslint": "^9.8.0",
         "eslint-config-prettier": "^9.0.0",
+        "eslint-plugin-prettier": "^5.5.7",
         "husky": "^9.1.7",
         "lint-staged": "^15.2.2",
         "nx": "20.3.0",
