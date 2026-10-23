@@ -28,7 +28,7 @@ jobs:
           FORCE_COLOR: '0'
           NO_COLOR: '1'
         run: |
-          npx nx release --dry-run --first-release > output.txt
+          pnpm exec nx release --dry-run --first-release > output.txt
           REPORT=$(cat output.txt | base64 -w 0)
 
           echo "releaseNote=$REPORT" >> $GITHUB_OUTPUT

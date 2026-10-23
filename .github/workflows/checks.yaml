@@ -28,8 +28,8 @@ jobs:
         uses: ./.github/workflows/health-check
         with:
           run-tests: true
-          run-tests-command: 'npx nx affected --target=test --parallel'
+          run-tests-command: 'pnpm exec nx affected --target=test --parallel'
           run-lint: true
-          run-lint-command: 'npx nx affected --target=lint --parallel'
+          run-lint-command: 'pnpm exec nx affected --target=lint --parallel'
           run-build: true
-          run-build-command: 'npx nx affected --target=build --parallel'
+          run-build-command: 'pnpm exec nx affected --target=build --parallel'

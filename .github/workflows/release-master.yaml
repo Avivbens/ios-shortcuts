@@ -36,11 +36,11 @@ jobs:
         uses: ./.github/workflows/health-check
         with:
           run-tests: true
-          run-tests-command: 'npx nx affected --target=test --parallel'
+          run-tests-command: 'pnpm exec nx affected --target=test --parallel'
           run-lint: false
-          run-lint-command: 'npx nx affected --target=lint --parallel'
+          run-lint-command: 'pnpm exec nx affected --target=lint --parallel'
           run-build: true
-          run-build-command: 'npx nx affected --target=build --parallel'
+          run-build-command: 'pnpm exec nx affected --target=build --parallel'
 
   release:
     name: 📦 Release Version
@@ -79,4 +79,4 @@ jobs:
           GIT_COMMITTER_NAME: github-actions[bot]
           GIT_COMMITTER_EMAIL: github-actions[bot]@users.noreply.github.com
         run: |
-          npx nx release --first-release
+          pnpm exec nx release --first-release
