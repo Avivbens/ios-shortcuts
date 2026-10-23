@@ -1,0 +1,6 @@
+packages:
+  - projects/packages/**
+
+allowBuilds:
+  '@swc/core': true
+  nx: true

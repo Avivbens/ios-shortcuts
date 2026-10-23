@@ -20,10 +20,6 @@
       "email": "avivbens87@gmail.com"
     }
   ],
-  "workspaces": [
-    "projects/libs/**",
-    "projects/packages/**"
-  ],
   "scripts": {
     "prepare": "husky || exit 0"
   },
@@ -51,5 +47,6 @@
     "tslib": "^2.3.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.72.0"
-  }
+  },
+  "packageManager": "pnpm@12.11.2"
 }
