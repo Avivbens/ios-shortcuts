@@ -23,8 +23,12 @@ jobs:
 
       - name: 🔬 Check Semantic Versioning
         id: semantic-release
+        # `supports-color` force-enables ANSI whenever `GITHUB_ACTIONS` is set, even for a redirected stdout
+        env:
+          FORCE_COLOR: '0'
+          NO_COLOR: '1'
         run: |
-          npx nx release --dry-run > output.txt
+          npx nx release --dry-run --first-release > output.txt
           REPORT=$(cat output.txt | base64 -w 0)
 
           echo "releaseNote=$REPORT" >> $GITHUB_OUTPUT
@@ -36,7 +40,11 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             // build release note
-            const semanticReleaseOutput = Buffer.from('${{ steps.semantic-release.outputs.releaseNote }}', 'base64').toString('utf8');
+            const stripAnsi = (str) => str.replace(/\u001B\[[0-9;]*m/g, '');
+
+            const semanticReleaseOutput = stripAnsi(
+                Buffer.from('${{ steps.semantic-release.outputs.releaseNote }}', 'base64').toString('utf8')
+            );
             const semanticReleaseLogMatch = /^.*Creating GitHub Release$/;
             const semanticReleaseEndLogMatch = /^.*Skipped publishing packages\.$/;
             const lines = semanticReleaseOutput.split('\n');
@@ -46,7 +54,10 @@ jobs:
             const lastSemanticReleaseEndLogIndex = lines
                 .findIndex((line) => line.match(semanticReleaseEndLogMatch));
 
-            const releaseNote = lines.slice(lastSemanticReleaseLogIndex + 1, lastSemanticReleaseEndLogIndex);
+            // `--first-release` has no base tag, so nx renders the whole changelog as an added diff block
+            const releaseNote = lines
+                .slice(lastSemanticReleaseLogIndex + 1, lastSemanticReleaseEndLogIndex)
+                .map((line) => line.replace(/^\+ ?/, ''));
 
             let res = releaseNote.join('\n');
             if (!releaseNote.length || !res) {
