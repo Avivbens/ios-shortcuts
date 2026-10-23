@@ -37,6 +37,39 @@
         "ci": {}
       }
     },
+    "sign": {
+      "executor": "@ios-shortcuts/workspace:sign",
+      "defaultConfiguration": "local",
+      "dependsOn": [
+        {
+          "target": "build",
+          "params": "forward"
+        }
+      ],
+      "outputs": ["{workspaceRoot}/dist/{projectName}"],
+      "configurations": {
+        "local": {},
+        "ci": {}
+      }
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "defaultConfiguration": "local",
+      "dependsOn": [
+        {
+          "target": "sign",
+          "params": "forward"
+        }
+      ],
+      "configurations": {
+        "local": {}
+      },
+      "options": {
+        "cwd": "{workspaceRoot}/dist/{projectName}",
+        "command": "open ./*.shortcut",
+        "parallel": false
+      }
+    },
     "lint": {
       "executor": "@nx/eslint:lint",
       "inputs": ["default", "^default", "{workspaceRoot}/eslint.config.mjs", "{workspaceRoot}/.prettierrc"],
