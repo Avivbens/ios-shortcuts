@@ -3,5 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "main": "./src/index.ts",
-  "types": "./src/index.ts"
+  "types": "./src/index.ts",
+  "dependencies": {
+    "@ios-shortcuts/shortcut-file": "workspace:*",
+    "@ios-shortcuts/shortcut-plist": "workspace:*"
+  }
 }
