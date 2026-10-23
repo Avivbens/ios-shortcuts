@@ -1,56 +1,56 @@
 {
-    "$schema": "./node_modules/nx/schemas/nx-schema.json",
-    "namedInputs": {
-        "default": ["{projectRoot}/**/*", "sharedGlobals"],
-        "production": ["default", "!{projectRoot}/.eslintrc.json", "!{projectRoot}/eslint.config.mjs"],
-        "sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml"]
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "production": ["default", "!{projectRoot}/.eslintrc.json", "!{projectRoot}/eslint.config.mjs"],
+    "sharedGlobals": ["{workspaceRoot}/.github/workflows/release-master.yaml"]
+  },
+  "plugins": [
+    {
+      "plugin": "@nx/js/typescript",
+      "options": {
+        "typecheck": {
+          "targetName": "typecheck"
+        },
+        "build": {
+          "targetName": "build",
+          "configName": "tsconfig.lib.json"
+        }
+      }
     },
-    "plugins": [
-        {
-            "plugin": "@nx/js/typescript",
-            "options": {
-                "typecheck": {
-                    "targetName": "typecheck"
-                },
-                "build": {
-                    "targetName": "build",
-                    "configName": "tsconfig.lib.json"
-                }
-            }
-        },
-        {
-            "plugin": "@nx/eslint/plugin",
-            "options": {
-                "targetName": "lint"
-            }
-        }
-    ],
-    "release": {
-        "projects": ["packages/*"],
-        "projectsRelationship": "independent",
-        "releaseTagPattern": "release/{projectName}/{version}",
-        "git": {
-            "commitMessage": "chore(release): release {version} [skip ci]"
-        },
-        "version": {
-            "conventionalCommits": true
-        },
-        "changelog": {
-            "workspaceChangelog": { "createRelease": "github" },
-            "projectChangelogs": { "createRelease": "github" }
-        },
-        "conventionalCommits": {
-            "types": {
-                "docs": {
-                    "semverBump": "patch"
-                },
-                "feat": {
-                    "semverBump": "none"
-                },
-                "fix": {
-                    "semverBump": "none"
-                }
-            }
-        }
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
     }
+  ],
+  "release": {
+    "projects": ["packages/*"],
+    "projectsRelationship": "independent",
+    "releaseTagPattern": "release/{projectName}/{version}",
+    "git": {
+      "commitMessage": "chore(release): release {version} [skip ci]"
+    },
+    "version": {
+      "conventionalCommits": true
+    },
+    "changelog": {
+      "workspaceChangelog": { "createRelease": "github" },
+      "projectChangelogs": { "createRelease": "github" }
+    },
+    "conventionalCommits": {
+      "types": {
+        "docs": {
+          "semverBump": "patch"
+        },
+        "feat": {
+          "semverBump": "none"
+        },
+        "fix": {
+          "semverBump": "none"
+        }
+      }
+    }
+  }
 }
