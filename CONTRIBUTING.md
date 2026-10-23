@@ -15,6 +15,20 @@ To get started, follow these steps:
 
 **Commit your changes, like `fix(shortcut): <Explain>`, and open a PR 🎉**
 
+## Generating New Libraries
+
+```bash
+nx g @ios-shortcuts/workspace:generate-library <your-library-name>
+```
+
+Libraries are pnpm workspace packages named `@ios-shortcuts/<your-library-name>`. To use one, declare it in the consuming shortcut's `package.json` and run `pnpm install`:
+
+```json
+"dependencies": {
+  "@ios-shortcuts/<your-library-name>": "workspace:*"
+}
+```
+
 ## Exporting a Shortcut Binary
 
 When adding or updating a shortcut, you need to export the `.shortcut` file from the Shortcuts app and place it under the package's `src/` directory (e.g. `projects/packages/<shortcut-name>/src/<Shortcut Name>.shortcut`).

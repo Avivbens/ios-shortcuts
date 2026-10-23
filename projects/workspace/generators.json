@@ -1,3 +1,9 @@
 {
-  "generators": {}
+  "generators": {
+    "generate-library": {
+      "factory": "./src/generators/generate-library/generate-library.generator",
+      "schema": "./src/generators/generate-library/generate-library.schema.json",
+      "description": "generate-library generator"
+    }
+  }
 }
