@@ -3,7 +3,7 @@
 # compiled output
 dist
 tmp
-out-tsc
+/out-tsc
 
 # dependencies
 node_modules
@@ -17,12 +17,18 @@ node_modules
 .settings/
 *.sublime-workspace
 
+# Redis
+dump.rdb
+
 # IDE - VSCode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# AI
+.serena
 
 # misc
 /.sass-cache
@@ -41,3 +47,16 @@ Thumbs.db
 .nx/cache
 .nx/workspace-data
 .eslintcache
+.serverless/meta.json
+
+# Tests
+coverage
+junit.xml
+reports
+test-report.xml
+.vscode/launch.json
+
+.claude/worktrees
+.nx/polygraph
+.nx/self-healing
+.nx/migrate-runs
