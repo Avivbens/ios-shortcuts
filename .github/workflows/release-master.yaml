@@ -36,11 +36,11 @@ jobs:
         uses: ./.github/workflows/health-check
         with:
           run-tests: true
-          run-tests-command: 'pnpm exec nx affected --target=test --parallel'
+          run-tests-command: 'pnpm exec nx affected --target=test'
           run-lint: false
-          run-lint-command: 'pnpm exec nx affected --target=lint --parallel'
+          run-lint-command: 'pnpm exec nx affected --target=lint'
           run-build: true
-          run-build-command: 'pnpm exec nx affected --target=build --parallel'
+          run-build-command: 'pnpm exec nx affected --target=build'
 
   release:
     name: 📦 Release Version
