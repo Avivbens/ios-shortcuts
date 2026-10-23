@@ -4,8 +4,8 @@ description: 'Checks the codebase health'
 
 inputs:
   run-tests-command:
-    description: 'Run tests command, default is `npm test`'
-    default: 'npx nx affected --target test'
+    description: 'Run tests command, default is `pnpm test`'
+    default: 'pnpm test'
     required: false
 
   run-tests:
@@ -14,8 +14,8 @@ inputs:
     required: false
 
   run-lint-command:
-    description: 'Run linter command, default is `npm run lint`'
-    default: 'npx nx affected --target lint'
+    description: 'Run linter command, default is `pnpm run lint`'
+    default: 'pnpm run lint'
     required: false
 
   run-lint:
@@ -24,8 +24,8 @@ inputs:
     required: false
 
   run-build-command:
-    description: 'Run build command, default is `npm run build`'
-    default: 'npx nx affected --target build'
+    description: 'Run build command, default is `pnpm run build`'
+    default: 'pnpm run build'
     required: false
 
   run-build:
