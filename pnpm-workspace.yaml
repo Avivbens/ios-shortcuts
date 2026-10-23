@@ -1,4 +1,5 @@
 packages:
+  - projects/libs/**
   - projects/packages/**
   - projects/workspace
 
