@@ -8,7 +8,7 @@ runs:
     - name: 🖥️ Setup pnpm & Node
       uses: pnpm/setup@v3
       with:
-        runtime: node@20
+        runtime: node@22
         install: false
 
     - name: 🔗 Install Dependencies
