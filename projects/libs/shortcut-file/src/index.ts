@@ -1,1 +1,1 @@
-export {};
+export * from './lib/signed-shortcut';
