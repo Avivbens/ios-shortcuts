@@ -21,7 +21,10 @@
     }
   ],
   "scripts": {
-    "prepare": "husky || exit 0"
+    "build": "nx run-many --target=build --all",
+    "lint": "nx run-many --target=lint --all",
+    "prepare": "husky || exit 0",
+    "test": "nx run-many --target=test --all"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.2.3",
