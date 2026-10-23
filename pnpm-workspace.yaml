@@ -1,5 +1,6 @@
 packages:
   - projects/packages/**
+  - projects/workspace
 
 allowBuilds:
   '@swc/core': true

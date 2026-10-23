@@ -175,6 +175,9 @@ importers:
       '@eslint/js':
         specifier: ^9.8.0
         version: 9.39.5
+      '@ios-shortcuts/workspace':
+        specifier: workspace:*
+        version: link:projects/workspace
       '@nx/devkit':
         specifier: 23.3.0
         version: 23.3.0(nx@23.3.0(@swc-node/register@1.12.1(@swc/core@1.16.18(@swc/helpers@0.5.23))(@swc/types@0.1.28)(supports-color@7.2.0)(typescript@6.0.3))(@swc/core@1.16.18(@swc/helpers@0.5.23)))
@@ -251,6 +254,8 @@ importers:
   projects/packages/ai-response: {}
 
   projects/packages/translate-text: {}
+
+  projects/workspace: {}
 
 packages:
 

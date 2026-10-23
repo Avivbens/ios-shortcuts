@@ -27,6 +27,7 @@
     "@commitlint/cli": "^19.6.1",
     "@commitlint/config-conventional": "^19.2.2",
     "@eslint/js": "^9.8.0",
+    "@ios-shortcuts/workspace": "workspace:*",
     "@nx/devkit": "23.3.0",
     "@nx/eslint": "23.3.0",
     "@nx/eslint-plugin": "23.3.0",
