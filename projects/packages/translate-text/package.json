@@ -1,22 +1,22 @@
 {
-  "name": "@ios-shortcuts/ai-response",
-  "version": "0.2.2",
+  "name": "@ios-shortcuts/translate-text",
+  "version": "0.2.3",
   "private": true,
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "dependencies": {},
   "nx": {
-    "sourceRoot": "ai-response/src",
+    "sourceRoot": "projects/packages/translate-text/src",
     "projectType": "library",
-    "name": "ai-response",
+    "name": "translate-text",
     "targets": {
       "nx-release-publish": {
         "options": {
-          "packageJson": "packages/ai-response/package.json",
+          "packageJson": "projects/packages/translate-text/package.json",
           "updateBuildableProjectDepsInPackageJson": false,
           "updateBuildableProjectDepsInWorkspace": false,
           "showOutputPath": true,
-          "download": "src/AI Response.shortcut"
+          "download": "src/Translate Text.shortcut"
         }
       }
     }

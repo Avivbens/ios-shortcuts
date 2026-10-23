@@ -26,7 +26,7 @@
     }
   ],
   "release": {
-    "projects": ["packages/*"],
+    "projects": ["projects/packages/*"],
     "projectsRelationship": "independent",
     "git": {
       "commitMessage": "chore(release): release {version} [skip ci]"

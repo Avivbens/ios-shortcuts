@@ -21,8 +21,8 @@
     }
   ],
   "workspaces": [
-    "libs/**",
-    "packages/**"
+    "projects/libs/**",
+    "projects/packages/**"
   ],
   "scripts": {
     "prepare": "husky || exit 0"
