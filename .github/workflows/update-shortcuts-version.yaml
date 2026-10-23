@@ -47,10 +47,6 @@ jobs:
       - name: 🖥️ Setup Env
         uses: ./.github/workflows/install
 
-      - name: 'Derive appropriate SHAs for base and head for `nx affected` commands'
-        uses: nrwl/nx-set-shas@v4
-        with: { main-branch-name: 'master' }
-
       - name: Update Shortcuts Versions
         timeout-minutes: 1
         continue-on-error: true
