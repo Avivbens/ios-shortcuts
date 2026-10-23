@@ -63,9 +63,9 @@ The **Translate Text Shortcut** is an iOS shortcut that translates text into you
 
 1. **Download / Import the Shortcut**
 
-    - [Click here to download](#download) the shortcut.
-    - When prompted, open it in the **Shortcuts** app.
-    - Review the steps and save it to your library.
+   - [Click here to download](#download) the shortcut.
+   - When prompted, open it in the **Shortcuts** app.
+   - Review the steps and save it to your library.
 
 ---
 
@@ -73,25 +73,25 @@ The **Translate Text Shortcut** is an iOS shortcut that translates text into you
 
 1. **From the Share Sheet**
 
-    - Select text in any app (Safari, Mail, Notes, Messages, etc.).
-    - Tap **Share** → **Translate Text**.
+   - Select text in any app (Safari, Mail, Notes, Messages, etc.).
+   - Tap **Share** → **Translate Text**.
 
 1. **From the Clipboard**
 
-    - Copy any text.
-    - Run the shortcut and choose **Clipboard** when prompted.
+   - Copy any text.
+   - Run the shortcut and choose **Clipboard** when prompted.
 
 1. **Free-Style Input**
 
-    - Run the shortcut and choose **Free-Style**.
-    - Type the text you want to translate.
+   - Run the shortcut and choose **Free-Style**.
+   - Type the text you want to translate.
 
 1. **Pick the Target Language**
 
-    - Choose one of the supported languages from the list.
+   - Choose one of the supported languages from the list.
 
 1. **Get the Translation**
-    - The shortcut returns the translated text for you to copy, share, or use further.
+   - The shortcut returns the translated text for you to copy, share, or use further.
 
 ---
 
@@ -113,11 +113,11 @@ The **Translate Text Shortcut** is an iOS shortcut that translates text into you
 
 1. **Add / Remove Languages**
 
-    - Edit the **Target language** list inside the shortcut to add or remove options.
+   - Edit the **Target language** list inside the shortcut to add or remove options.
 
 1. **Default Input Source**
 
-    - The shortcut offers a menu (Clipboard / Free-Style) on each run. You can hard-code a default by removing the menu and wiring the input directly.
+   - The shortcut offers a menu (Clipboard / Free-Style) on each run. You can hard-code a default by removing the menu and wiring the input directly.
 
 ---
 

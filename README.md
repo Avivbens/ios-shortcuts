@@ -56,15 +56,15 @@ This repository serves as a **monorepo** for all of my iOS Shortcuts. By keeping
 
 1. **Select your desire shortcut** under the [packages](packages) directory.
 2. **Download the shortcut** located under the `src` directory.
-    - Tap the download link.
-    - Open the shortcut in the Shortcuts app.
-    - Review the actions and customize as needed.
-    - Save the shortcut to your library.
+   - Tap the download link.
+   - Open the shortcut in the Shortcuts app.
+   - Review the actions and customize as needed.
+   - Save the shortcut to your library.
 3. **Run the shortcut**:
 
-    - Tap the shortcut tile.
-    - Invoke it via Siri by using the shortcut's name.
-    - Add it to the Home Screen for quick access.
+   - Tap the shortcut tile.
+   - Invoke it via Siri by using the shortcut's name.
+   - Add it to the Home Screen for quick access.
 
 ---
 
