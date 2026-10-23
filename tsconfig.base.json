@@ -29,7 +29,9 @@
     "sourceMap": false,
     "strict": true,
     "target": "es2022",
-    "verbatimModuleSyntax": false
+    "verbatimModuleSyntax": false,
+    "noUncheckedSideEffectImports": false,
+    "types": ["*"]
   },
   "include": ["projects/**/*"]
 }
