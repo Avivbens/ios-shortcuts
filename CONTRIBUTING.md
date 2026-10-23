@@ -17,7 +17,7 @@ To get started, follow these steps:
 
 ## Exporting a Shortcut Binary
 
-When adding or updating a shortcut, you need to export the `.shortcut` file from the Shortcuts app and place it under the package's `src/` directory (e.g. `packages/<shortcut-name>/src/<Shortcut Name>.shortcut`).
+When adding or updating a shortcut, you need to export the `.shortcut` file from the Shortcuts app and place it under the package's `src/` directory (e.g. `projects/packages/<shortcut-name>/src/<Shortcut Name>.shortcut`).
 
 ### On macOS
 

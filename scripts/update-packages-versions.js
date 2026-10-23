@@ -7,7 +7,7 @@ const { cwd } = require('node:process');
 const { FsTree } = require('nx/src/generators/tree');
 
 const SHORTCUTS_FILE = join(cwd(), 'shortcuts.json');
-const DOWNLOAD_URL = `https://github.com/Avivbens/ios-shortcuts/raw/refs/heads/master/packages`;
+const DOWNLOAD_URL = `https://github.com/Avivbens/ios-shortcuts/raw/refs/heads/master/projects/packages`;
 
 const tree = new FsTree(workspaceRoot, false);
 const projectsMap = getProjects(tree);
