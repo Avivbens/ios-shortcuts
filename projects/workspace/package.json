@@ -3,5 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "main": "./src/index.ts",
+  "dependencies": {
+    "@ios-shortcuts/builder": "workspace:*"
+  },
+  "executors": "./executors.json",
   "generators": "./generators.json"
 }

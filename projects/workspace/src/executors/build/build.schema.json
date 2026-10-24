@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "version": 2,
+  "title": "Build Shortcut Options",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Version to stamp into the shortcut; defaults to the project's package.json version"
+    }
+  },
+  "required": []
+}

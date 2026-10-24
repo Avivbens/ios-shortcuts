@@ -28,6 +28,15 @@
     }
   ],
   "targetDefaults": {
+    "build": {
+      "executor": "@ios-shortcuts/workspace:build",
+      "defaultConfiguration": "local",
+      "outputs": ["{workspaceRoot}/dist/{projectName}"],
+      "configurations": {
+        "local": {},
+        "ci": {}
+      }
+    },
     "lint": {
       "executor": "@nx/eslint:lint",
       "inputs": ["default", "^default", "{workspaceRoot}/eslint.config.mjs", "{workspaceRoot}/.prettierrc"],
@@ -43,6 +52,9 @@
     },
     "test": {
       "inputs": ["default", "^default", "{workspaceRoot}/vitest.shared.mts"]
+    },
+    "unwrap": {
+      "executor": "@ios-shortcuts/workspace:unwrap"
     }
   },
   "release": {

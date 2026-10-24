@@ -1,0 +1,14 @@
+{
+  "executors": {
+    "build": {
+      "implementation": "./src/executors/build/build.executor",
+      "schema": "./src/executors/build/build.schema.json",
+      "description": "build executor"
+    },
+    "unwrap": {
+      "implementation": "./src/executors/unwrap/unwrap.executor",
+      "schema": "./src/executors/unwrap/unwrap.schema.json",
+      "description": "unwrap executor"
+    }
+  }
+}
