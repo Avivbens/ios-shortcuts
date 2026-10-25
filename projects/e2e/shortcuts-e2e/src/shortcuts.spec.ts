@@ -6,7 +6,10 @@ import { env } from 'node:process';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { z } from 'zod';
 import {
+  SHORTCUTS_MANIFEST_FILE,
   SHORTCUT_ENTRY_FILE,
+  type ShortcutsManifest,
+  ShortcutsManifestSchema,
   VERSION_VARIABLE,
   compileShortcut,
   getVariableText,
@@ -16,7 +19,6 @@ import {
 import { DependencyType, readCachedProjectGraph, workspaceRoot } from '@nx/devkit';
 import { toComparableWorkflow } from './common/comparable-workflow';
 import { createNxTaskEnvSchema } from './schemas/nx-task-env.schema';
-import { type ShortcutsManifest, ShortcutsManifestSchema } from './schemas/shortcuts-manifest.schema';
 
 const graph = readCachedProjectGraph();
 
@@ -44,7 +46,7 @@ function versionOf(name: string): string {
 }
 
 function readManifest(): ShortcutsManifest {
-  return ShortcutsManifestSchema.parse(JSON.parse(readFileSync(join(workspaceRoot, 'shortcuts.json'), 'utf8')));
+  return ShortcutsManifestSchema.parse(JSON.parse(readFileSync(join(workspaceRoot, SHORTCUTS_MANIFEST_FILE), 'utf8')));
 }
 
 /** The signed export each shortcut is ported from, kept until the TypeScript source fully replaces it. */
