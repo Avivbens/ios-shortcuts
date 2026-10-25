@@ -1,3 +1,8 @@
+export * from './lib/actions/chatgpt';
+export * from './lib/actions/notification';
+export * from './lib/actions/scripting';
+export * from './lib/actions/sharing';
+export * from './lib/actions/text';
 export * from './lib/create-shortcut';
 export * from './lib/references';
 export {
