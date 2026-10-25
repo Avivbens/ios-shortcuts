@@ -299,7 +299,14 @@ importers:
 
   projects/libs/shortcut-plist: {}
 
-  projects/libs/updater: {}
+  projects/libs/updater:
+    dependencies:
+      '@ios-shortcuts/builder':
+        specifier: workspace:*
+        version: link:../builder
+      '@ios-shortcuts/shortcut':
+        specifier: workspace:*
+        version: link:../shortcut
 
   projects/libs/utils: {}
 
