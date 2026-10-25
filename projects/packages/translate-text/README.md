@@ -11,7 +11,7 @@
 
 > **Translate anything, anywhere.** A fast, AI-powered iOS shortcut that translates text from the Share Sheet, your clipboard, or free-style input into the language of your choice.
 
-<a id="download" href="https://github.com/Avivbens/ios-shortcuts/raw/refs/heads/master/projects/packages/translate-text/src/Translate%20Text.shortcut">
+<a id="download" href="https://github.com/Avivbens/ios-shortcuts#shortcuts">
   <img src="https://www.oiml.org/en/ressources/icons/download-button.jpg/@@images/3139e560-3f59-4ee9-a5e4-71f0ee9535eb.png" alt="Download" width="100" height="100">
 </a>
 
