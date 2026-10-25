@@ -276,6 +276,8 @@ importers:
         specifier: workspace:*
         version: link:../shortcut-plist
 
+  projects/libs/shortcut: {}
+
   projects/libs/shortcut-file:
     dependencies:
       '@ios-shortcuts/shortcut-plist':
