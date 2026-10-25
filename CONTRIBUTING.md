@@ -48,8 +48,6 @@ When adding or updating a shortcut, you need to export the `.shortcut` file from
 1. Long-press the shortcut → **Share** → **Save to Files**.
 1. Pick iCloud Drive (or any synced location) and move the file into the package's `src/` directory on your Mac.
 
-Make sure the filename matches the `download` path declared in the package's `package.json` (under `nx.targets.nx-release-publish.options.download`).
-
 ## Commit Message Guidelines
 
 We follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification. Make sure your commit messages follow the format below:

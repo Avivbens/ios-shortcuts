@@ -22,8 +22,7 @@
           "packageJson": "projects/packages/translate-text/package.json",
           "updateBuildableProjectDepsInPackageJson": false,
           "updateBuildableProjectDepsInWorkspace": false,
-          "showOutputPath": true,
-          "download": "src/Translate Text.shortcut"
+          "showOutputPath": true
         }
       }
     }
