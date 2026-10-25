@@ -1,6 +1,3 @@
-/** The committed, unsigned source of a shortcut, at its project root. */
-export const SHORTCUT_SOURCE_FILE = 'shortcut.plist';
-
 /** A shortcut's TypeScript source; it exports the `shortcut` function builds call. */
 export const SHORTCUT_ENTRY_FILE = 'src/main.ts';
 

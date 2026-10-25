@@ -8,9 +8,12 @@ export async function unwrapExecutor(
   options: UnwrapExecutorSchema,
   context: ExecutorContext,
 ): Promise<{ success: boolean }> {
-  const { projectRoot } = getProject(context);
+  const { name, projectRoot } = getProject(context);
 
-  await unwrapShortcut({ signedPath: join(projectRoot, options.input), projectRoot });
+  await unwrapShortcut({
+    signedPath: join(projectRoot, options.input),
+    outputPath: join(context.root, 'dist', name, `${name}.unwrapped.plist`),
+  });
 
   return { success: true };
 }
