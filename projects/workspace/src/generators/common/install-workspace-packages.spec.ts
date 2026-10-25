@@ -2,10 +2,14 @@ import { describe, expect, it, vi } from 'vitest';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { installWorkspacePackages } from './install-workspace-packages';
 
-const { execFileSync } = vi.hoisted(() => ({ execFileSync: vi.fn() }));
+const { execSync } = vi.hoisted(() => ({ execSync: vi.fn() }));
 vi.mock('node:child_process', async (importOriginal) => ({
   ...(await importOriginal<typeof import('node:child_process')>()),
-  execFileSync,
+  execSync,
+}));
+vi.mock('@nx/devkit', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('@nx/devkit')>()),
+  getPackageManagerCommand: () => ({ install: 'pnpm install --no-frozen-lockfile' }),
 }));
 
 describe('install-workspace-packages', () => {
@@ -13,15 +17,15 @@ describe('install-workspace-packages', () => {
     it('should wait for the generator to write its files before installing', () => {
       installWorkspacePackages(createTreeWithEmptyWorkspace());
 
-      expect(execFileSync).not.toHaveBeenCalled();
+      expect(execSync).not.toHaveBeenCalled();
     });
 
-    it('should force a resolution, so a package with no dependencies still lands in the lockfile', () => {
+    it("should force a resolution on Nx's install command, so a package with no dependencies lands in the lockfile", () => {
       const tree = createTreeWithEmptyWorkspace();
 
       installWorkspacePackages(tree)();
 
-      expect(execFileSync).toHaveBeenCalledWith('pnpm', ['install', '--no-prefer-frozen-lockfile'], {
+      expect(execSync).toHaveBeenCalledWith('pnpm install --no-frozen-lockfile --no-prefer-frozen-lockfile', {
         cwd: tree.root,
         stdio: 'inherit',
       });
