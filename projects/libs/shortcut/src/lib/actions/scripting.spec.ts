@@ -1,7 +1,18 @@
 import { describe, expect, it } from 'vitest';
 import { parametersOf } from '../../mocks/actions.mock';
-import { outputOf, shortcutInput } from '../references';
-import { ask, chooseFromList, comment, list, menu, setVariable } from './scripting';
+import { outputOf, shortcutInput, text, variable } from '../references';
+import {
+  ask,
+  chooseFromList,
+  comment,
+  exit,
+  getDictionaryValue,
+  ifEquals,
+  list,
+  menu,
+  randomNumber,
+  setVariable,
+} from './scripting';
 
 /** Expected values are the decoded Translate Text shortcut's actions 2 to 11; UUIDs are matched, not copied. */
 describe('scripting', () => {
@@ -78,6 +89,78 @@ describe('scripting', () => {
       expect(actions[3]).toEqual({ GroupingIdentifier: grouping, WFControlFlowMode: 1, WFMenuItemTitle: 'Free-Style' });
       expect(actions.at(-1)).toEqual({ GroupingIdentifier: grouping, WFControlFlowMode: 2 });
       expect(actions).toHaveLength(7);
+    });
+  });
+
+  describe('randomNumber', () => {
+    it('should store both bounds as strings, as the decoded AI Response does', () => {
+      expect(parametersOf([randomNumber({ minimum: 0, maximum: 10 })])).toEqual([
+        { UUID: expect.any(String), WFRandomNumberMaximum: '10', WFRandomNumberMinimum: '0' },
+      ]);
+    });
+  });
+
+  describe('ifEquals', () => {
+    it('should compare a number under WFNumberValue, as the update check rolls its die', () => {
+      const die = randomNumber({ minimum: 0, maximum: 10 });
+
+      const [rolled, start, inside, end] = parametersOf([die, ifEquals(outputOf(die), 5, [exit()])]);
+
+      expect(start).toEqual({
+        GroupingIdentifier: expect.any(String),
+        WFCondition: 4,
+        WFControlFlowMode: 0,
+        WFInput: {
+          Type: 'Variable',
+          Variable: {
+            Value: { OutputName: 'Random Number', OutputUUID: rolled?.['UUID'], Type: 'ActionOutput' },
+            WFSerializationType: 'WFTextTokenAttachment',
+          },
+        },
+        WFNumberValue: '5',
+      });
+      expect(inside).toEqual({});
+      expect(end).toEqual({ GroupingIdentifier: start?.['GroupingIdentifier'], WFControlFlowMode: 2 });
+    });
+
+    it('should compare text under WFConditionalActionString', () => {
+      const [start] = parametersOf([ifEquals(variable('shouldUpdate'), 'true', [])]);
+
+      expect(start).toMatchObject({ WFCondition: 4, WFConditionalActionString: 'true' });
+      expect(start).not.toHaveProperty('WFNumberValue');
+    });
+  });
+
+  describe('getDictionaryValue', () => {
+    it('should read a key from a template, with the value type the decoded AI Response sets', () => {
+      expect(
+        parametersOf([
+          getDictionaryValue(variable('shortcutData'), text`${variable('shortcutName')}`, { valueType: 'Value' }),
+        ]),
+      ).toEqual([
+        {
+          UUID: expect.any(String),
+          WFDictionaryKey: {
+            Value: {
+              attachmentsByRange: { '{0, 1}': { Type: 'Variable', VariableName: 'shortcutName' } },
+              string: '\uFFFC',
+            },
+            WFSerializationType: 'WFTextTokenString',
+          },
+          WFGetDictionaryValueType: 'Value',
+          WFInput: {
+            Value: { Type: 'Variable', VariableName: 'shortcutData' },
+            WFSerializationType: 'WFTextTokenAttachment',
+          },
+        },
+      ]);
+    });
+
+    it('should leave the value type out when none is given, as for the "version" key', () => {
+      const [read] = parametersOf([getDictionaryValue(variable('shortcutData'), 'version')]);
+
+      expect(read).not.toHaveProperty('WFGetDictionaryValueType');
+      expect(read).toMatchObject({ WFDictionaryKey: 'version' });
     });
   });
 });
