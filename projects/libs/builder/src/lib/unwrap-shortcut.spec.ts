@@ -12,9 +12,11 @@ vi.mock('@ios-shortcuts/shortcut-file', () => ({ readSignedShortcut: vi.fn() }))
 describe('unwrap-shortcut', () => {
   describe('unwrapShortcut', () => {
     let projectRoot: string;
+    let outputPath: string;
 
     beforeEach(async () => {
       projectRoot = await mkdtemp(join(tmpdir(), 'unwrap-shortcut-spec-'));
+      outputPath = join(projectRoot, 'dist', 'ai-response', 'ai-response.unwrapped.plist');
       vi.mocked(readSignedShortcut).mockResolvedValue(VERSIONED_WORKFLOW);
     });
 
@@ -22,11 +24,11 @@ describe('unwrap-shortcut', () => {
       await rm(projectRoot, { recursive: true, force: true });
     });
 
-    it('should write the signed file as the source, through the serializer builds use', async () => {
-      await unwrapShortcut({ signedPath: 'AI Response.shortcut', projectRoot });
+    it('should decode the signed file into the output, through the serializer builds use', async () => {
+      await unwrapShortcut({ signedPath: 'AI Response.shortcut', outputPath });
 
       expect(readSignedShortcut).toHaveBeenCalledWith('AI Response.shortcut');
-      expect(await readFile(join(projectRoot, 'shortcut.plist'), 'utf8')).toBe(buildShortcutPlist(VERSIONED_WORKFLOW));
+      expect(await readFile(outputPath, 'utf8')).toBe(buildShortcutPlist(VERSIONED_WORKFLOW));
     });
   });
 });

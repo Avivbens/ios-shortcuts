@@ -6,7 +6,7 @@
   "properties": {
     "input": {
       "type": "string",
-      "description": "Signed .shortcut file to unwrap into shortcut.plist, relative to the project root"
+      "description": "Signed .shortcut file to decode into dist/<project>/<project>.unwrapped.plist, relative to the project root"
     }
   },
   "required": ["input"]

@@ -7,7 +7,7 @@ import unwrapExecutor from './unwrap.executor';
 vi.mock('@ios-shortcuts/builder', () => ({ unwrapShortcut: vi.fn() }));
 
 describe('unwrap executor', () => {
-  it('should unwrap the given file, relative to the project root, into its source', async () => {
+  it('should decode the given file, relative to the project root, into dist next to the build', async () => {
     const projectRoot = join('/repo', 'projects/packages/ai-response');
 
     expect(
@@ -18,7 +18,7 @@ describe('unwrap executor', () => {
 
     expect(unwrapShortcut).toHaveBeenCalledWith({
       signedPath: join(projectRoot, 'src/AI Response.shortcut'),
-      projectRoot,
+      outputPath: join('/repo', 'dist/ai-response/ai-response.unwrapped.plist'),
     });
   });
 });
