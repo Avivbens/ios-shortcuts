@@ -1,6 +1,7 @@
 import type { ShortcutContext, ShortcutWorkflow } from '@ios-shortcuts/builder';
 import { comment, createShortcut, outputOf, setVariable, textAction } from '@ios-shortcuts/shortcut';
 import { credits, updateCheck } from '@ios-shortcuts/updater';
+import { chat } from './chat';
 import { NUM_OF_RESULTS } from './variables';
 
 export function shortcut({ version }: ShortcutContext): ShortcutWorkflow {
@@ -57,6 +58,7 @@ export function shortcut({ version }: ShortcutContext): ShortcutWorkflow {
       setVariable(NUM_OF_RESULTS, outputOf(numOfResults)),
       endOfConfiguration,
       ...updateCheck({ name: 'ai-response', version }),
+      ...chat(),
     ],
   );
 }
