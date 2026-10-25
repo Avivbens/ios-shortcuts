@@ -2,6 +2,7 @@
   "name": "@ios-shortcuts/ai-response",
   "version": "0.2.2",
   "private": true,
+  "description": "Get AI suggestions for your current chat (support any chat app)",
   "dependencies": {},
   "devDependencies": {
     "@ios-shortcuts/builder": "workspace:*",
