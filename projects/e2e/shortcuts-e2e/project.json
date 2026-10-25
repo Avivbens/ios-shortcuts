@@ -4,7 +4,9 @@
   "sourceRoot": "projects/e2e/shortcuts-e2e/src",
   "projectType": "application",
   "tags": ["e2e"],
+  "implicitDependencies": ["ai-response", "translate-text"],
   "targets": {
-    "test": {}
+    "test": {},
+    "lint": {}
   }
 }
