@@ -24,7 +24,7 @@ describe('scripting', () => {
 
   describe('setVariable', () => {
     it('should store the shortcut input under a variable name', () => {
-      expect(parametersOf([setVariable('TextToTranslate', shortcutInput())])).toEqual([
+      expect(parametersOf([setVariable(variable('TextToTranslate'), shortcutInput())])).toEqual([
         {
           WFInput: { Value: { Type: 'ExtensionInput' }, WFSerializationType: 'WFTextTokenAttachment' },
           WFVariableName: 'TextToTranslate',
@@ -61,7 +61,11 @@ describe('scripting', () => {
       const languages = list(['Hebrew']);
       const language = chooseFromList(outputOf(languages));
 
-      const [, , stored] = parametersOf([languages, language, setVariable('TranslateTo', outputOf(language))]);
+      const [, , stored] = parametersOf([
+        languages,
+        language,
+        setVariable(variable('TranslateTo'), outputOf(language)),
+      ]);
 
       expect(stored?.['WFInput']).toMatchObject({ Value: { OutputName: 'Selected Item' } });
     });
@@ -73,8 +77,8 @@ describe('scripting', () => {
 
       const actions = parametersOf([
         menu('What to translate?', [
-          ['Clipboard', [setVariable('TextToTranslate', shortcutInput())]],
-          ['Free-Style', [question, setVariable('TextToTranslate', outputOf(question))]],
+          ['Clipboard', [setVariable(variable('TextToTranslate'), shortcutInput())]],
+          ['Free-Style', [question, setVariable(variable('TextToTranslate'), outputOf(question))]],
         ]),
       ]);
 

@@ -6,6 +6,8 @@ export type Reference =
   | { readonly [TOKEN]: 'reference'; kind: 'shortcut-input' }
   | { readonly [TOKEN]: 'reference'; kind: 'output'; step: Step };
 
+export type VariableReference = Extract<Reference, { kind: 'variable' }>;
+
 export interface TextTemplate {
   readonly [TOKEN]: 'text';
   segments: (string | Reference)[];
