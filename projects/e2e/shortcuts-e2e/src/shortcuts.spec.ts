@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -7,17 +7,14 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { z } from 'zod';
 import {
   SHORTCUTS_MANIFEST_FILE,
-  SHORTCUT_ENTRY_FILE,
   type ShortcutsManifest,
   ShortcutsManifestSchema,
   VERSION_VARIABLE,
   compileShortcut,
   getVariableText,
   parseShortcutPlist,
-  readSignedShortcut,
 } from '@ios-shortcuts/builder';
 import { DependencyType, readCachedProjectGraph, workspaceRoot } from '@nx/devkit';
-import { toComparableWorkflow } from './common/comparable-workflow';
 import { createNxTaskEnvSchema } from './schemas/nx-task-env.schema';
 
 const graph = readCachedProjectGraph();
@@ -49,17 +46,6 @@ function readManifest(): ShortcutsManifest {
   return ShortcutsManifestSchema.parse(JSON.parse(readFileSync(join(workspaceRoot, SHORTCUTS_MANIFEST_FILE), 'utf8')));
 }
 
-/** The signed export each shortcut is ported from, kept until the TypeScript source fully replaces it. */
-function signedShortcutOf(name: string): string {
-  const sourceRoot = join(projectRootOf(name), 'src');
-  const [signed, ...others] = readdirSync(sourceRoot).filter((file) => file.endsWith('.shortcut'));
-  if (!signed || others.length) {
-    throw new Error(`${name} must keep exactly one signed .shortcut in src`);
-  }
-
-  return join(sourceRoot, signed);
-}
-
 describe('shortcuts', () => {
   let outputDir: string;
 
@@ -76,11 +62,9 @@ describe('shortcuts', () => {
   });
 
   describe.each(shortcuts)('%s', (name) => {
-    const ported = existsSync(join(projectRootOf(name), SHORTCUT_ENTRY_FILE));
-
-    async function build(version = versionOf(name)): Promise<ReturnType<typeof parseShortcutPlist>> {
+    async function build(): Promise<ReturnType<typeof parseShortcutPlist>> {
       const outputPath = join(outputDir, `${name}.plist`);
-      await compileShortcut({ projectRoot: projectRootOf(name), name, version, outputPath });
+      await compileShortcut({ projectRoot: projectRootOf(name), name, version: versionOf(name), outputPath });
 
       return parseShortcutPlist(await readFile(outputPath, 'utf8'));
     }
@@ -92,21 +76,10 @@ describe('shortcuts', () => {
       expect(listed.localeCompare(versionOf(name), undefined, { numeric: true })).toBeLessThanOrEqual(0);
     });
 
-    it.skipIf(!ported)('should build from its TypeScript source, carrying its package.json version', async () => {
+    it('should build from its TypeScript source, carrying its package.json version', async () => {
       const workflow = await build();
 
       expect([undefined, versionOf(name)]).toContain(getVariableText(workflow, VERSION_VARIABLE));
     });
-
-    it.skipIf(!ported || process.platform !== 'darwin')(
-      'should match the signed shortcut it replaces at the version it carries, apart from UUIDs',
-      async () => {
-        const signed = await readSignedShortcut(signedShortcutOf(name));
-        /** A release moves package.json past the committed signed file, so build at the file's own version. */
-        const version = getVariableText(signed, VERSION_VARIABLE) ?? versionOf(name);
-
-        expect(toComparableWorkflow(await build(version))).toEqual(toComparableWorkflow(signed));
-      },
-    );
   });
 });
