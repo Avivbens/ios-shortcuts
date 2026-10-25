@@ -18,7 +18,7 @@ const TextParametersSchema = z.looseObject({
 
 /**
  * A variable is set from another action's output, linked by `OutputUUID`. Only a plain Text action counts as the
- * source - a variable set any other way cannot be stamped, so finding the `setvariable` but no such source throws.
+ * source - a variable set any other way cannot be checked, so finding the `setvariable` but no such source throws.
  */
 function getVariableSourceIndex(workflow: ShortcutWorkflow, name: string): number | undefined {
   const outputId = workflow.WFWorkflowActions.filter((action) => action.WFWorkflowActionIdentifier === SET_VARIABLE)
@@ -49,20 +49,4 @@ export function getVariableText(workflow: ShortcutWorkflow, name: string): strin
   }
 
   return TextParametersSchema.parse(workflow.WFWorkflowActions[index]?.WFWorkflowActionParameters).WFTextActionText;
-}
-
-export function setVariableText(workflow: ShortcutWorkflow, name: string, text: string): ShortcutWorkflow {
-  const index = getVariableSourceIndex(workflow, name);
-  if (index === undefined) {
-    return workflow;
-  }
-
-  return {
-    ...workflow,
-    WFWorkflowActions: workflow.WFWorkflowActions.map((action, actionIndex) =>
-      actionIndex === index
-        ? { ...action, WFWorkflowActionParameters: { ...action.WFWorkflowActionParameters, WFTextActionText: text } }
-        : action,
-    ),
-  };
 }

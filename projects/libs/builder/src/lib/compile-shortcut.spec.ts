@@ -1,8 +1,8 @@
-import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { type ShortcutWorkflow, buildShortcutPlist, parseShortcutPlist } from '@ios-shortcuts/shortcut-plist';
+import { type ShortcutWorkflow, parseShortcutPlist } from '@ios-shortcuts/shortcut-plist';
 import { compileShortcut } from './compile-shortcut';
 import { getVariableText } from './shortcut-variables';
 import { VERSIONED_WORKFLOW, toTextAction, toWorkflow } from './workflow.mock';
@@ -12,13 +12,20 @@ describe('compile-shortcut', () => {
     let projectRoot: string;
     let outputPath: string;
 
-    async function compile(workflow: ShortcutWorkflow, version: string, name = 'ai-response'): Promise<void> {
-      await writeFile(join(projectRoot, 'shortcut.plist'), buildShortcutPlist(workflow));
-      await compileShortcut({ projectRoot, name, version, outputPath });
+    /** A `src/main.ts` that returns `workflow`, with the build's version in its first action when `stamp` is set. */
+    async function writeSource(workflow: ShortcutWorkflow, { stamp }: { stamp: boolean }): Promise<void> {
+      const stampLine = stamp
+        ? 'workflow.WFWorkflowActions[0].WFWorkflowActionParameters.WFTextActionText = version;'
+        : '';
+      await mkdir(join(projectRoot, 'src'), { recursive: true });
+      await writeFile(
+        join(projectRoot, 'src/main.ts'),
+        `export function shortcut({ version }: { version: string }) {\n  const workflow = ${JSON.stringify(workflow)};\n  ${stampLine}\n  return workflow;\n}\n`,
+      );
     }
 
-    async function readWorkflow(path: string): Promise<ShortcutWorkflow> {
-      return parseShortcutPlist(await readFile(path, 'utf8'));
+    async function readOutput(): Promise<ShortcutWorkflow> {
+      return parseShortcutPlist(await readFile(outputPath, 'utf8'));
     }
 
     beforeEach(async () => {
@@ -30,35 +37,75 @@ describe('compile-shortcut', () => {
       await rm(projectRoot, { recursive: true, force: true });
     });
 
-    it('should stamp the version into both the source and the output', async () => {
-      await compile(VERSIONED_WORKFLOW, '0.2.3');
+    it('should build the source with the version and write only the output', async () => {
+      await writeSource(VERSIONED_WORKFLOW, { stamp: true });
 
-      expect(getVariableText(await readWorkflow(join(projectRoot, 'shortcut.plist')), 'shortcutVersion')).toBe('0.2.3');
-      expect(getVariableText(await readWorkflow(outputPath), 'shortcutVersion')).toBe('0.2.3');
+      await compileShortcut({ projectRoot, name: 'ai-response', version: '0.2.3', outputPath });
+
+      expect(getVariableText(await readOutput(), 'shortcutVersion')).toBe('0.2.3');
+      expect(await readdir(projectRoot)).toEqual(['dist', 'src']);
     });
 
-    it('should coerce a quoted version, as fast-alfred does', async () => {
-      await compile(VERSIONED_WORKFLOW, '"0.2.3"');
+    it('should hand the source a coerced version, as fast-alfred coerces a quoted one', async () => {
+      await writeSource(VERSIONED_WORKFLOW, { stamp: true });
 
-      expect(getVariableText(await readWorkflow(outputPath), 'shortcutVersion')).toBe('0.2.3');
+      await compileShortcut({ projectRoot, name: 'ai-response', version: '"0.2.3"', outputPath });
+
+      expect(getVariableText(await readOutput(), 'shortcutVersion')).toBe('0.2.3');
     });
 
-    it('should only validate a shortcut that carries no version', async () => {
+    it('should build a shortcut that carries no version as it is', async () => {
       const workflow = toWorkflow([toTextAction('A', 'Translate')]);
+      await writeSource(workflow, { stamp: false });
 
-      await compile(workflow, '0.2.3');
+      await compileShortcut({ projectRoot, name: 'translate-text', version: '0.2.3', outputPath });
 
-      expect(await readWorkflow(outputPath)).toEqual(workflow);
+      expect(await readOutput()).toEqual(workflow);
+    });
+
+    it('should load a source split into modules imported without extensions, as the shortcut library is', async () => {
+      const workflow = toWorkflow([toTextAction('A', 'Translate')]);
+      await mkdir(join(projectRoot, 'src'), { recursive: true });
+      await writeFile(join(projectRoot, 'src/workflow.ts'), `export const workflow = ${JSON.stringify(workflow)};\n`);
+      await writeFile(
+        join(projectRoot, 'src/main.ts'),
+        "import { workflow } from './workflow';\n\nexport function shortcut() {\n  return workflow;\n}\n",
+      );
+
+      await compileShortcut({ projectRoot, name: 'translate-text', version: '0.2.3', outputPath });
+
+      expect(await readOutput()).toEqual(workflow);
+    });
+
+    it('should refuse a source that ignores the version, which would leave installed copies prompting forever', async () => {
+      await writeSource(VERSIONED_WORKFLOW, { stamp: false });
+
+      await expect(compileShortcut({ projectRoot, name: 'ai-response', version: '0.2.3', outputPath })).rejects.toThrow(
+        'shortcutVersion is "0.2.2", expected the build version "0.2.3"',
+      );
     });
 
     it('should refuse a shortcutName other than the project name, the key installed copies look up', async () => {
-      await expect(compile(VERSIONED_WORKFLOW, '0.2.3', 'translate-text')).rejects.toThrow(
-        'shortcutName is "ai-response", expected the project name "translate-text"',
+      await writeSource(VERSIONED_WORKFLOW, { stamp: true });
+
+      await expect(
+        compileShortcut({ projectRoot, name: 'translate-text', version: '0.2.3', outputPath }),
+      ).rejects.toThrow('shortcutName is "ai-response", expected the project name "translate-text"');
+    });
+
+    it('should refuse a source without a `shortcut` function', async () => {
+      await mkdir(join(projectRoot, 'src'), { recursive: true });
+      await writeFile(join(projectRoot, 'src/main.ts'), 'export const shortcut = 1;\n');
+
+      await expect(compileShortcut({ projectRoot, name: 'ai-response', version: '0.2.3', outputPath })).rejects.toThrow(
+        'src/main.ts must export a `shortcut` function',
       );
     });
 
     it('should refuse a version it cannot coerce', async () => {
-      await expect(compile(VERSIONED_WORKFLOW, 'next')).rejects.toThrow('next is not a version');
+      await expect(compileShortcut({ projectRoot, name: 'ai-response', version: 'next', outputPath })).rejects.toThrow(
+        'next is not a version',
+      );
     });
   });
 });
