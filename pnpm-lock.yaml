@@ -312,7 +312,17 @@ importers:
 
   projects/packages/ai-response: {}
 
-  projects/packages/translate-text: {}
+  projects/packages/translate-text:
+    devDependencies:
+      '@ios-shortcuts/builder':
+        specifier: workspace:*
+        version: link:../../libs/builder
+      '@ios-shortcuts/shortcut':
+        specifier: workspace:*
+        version: link:../../libs/shortcut
+      '@ios-shortcuts/updater':
+        specifier: workspace:*
+        version: link:../../libs/updater
 
   projects/workspace:
     dependencies:
