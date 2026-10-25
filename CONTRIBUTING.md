@@ -29,24 +29,25 @@ Libraries are pnpm workspace packages named `@ios-shortcuts/<your-library-name>`
 }
 ```
 
-## Exporting a Shortcut Binary
+## Writing a Shortcut
 
-When adding or updating a shortcut, you need to export the `.shortcut` file from the Shortcuts app and place it under the package's `src/` directory (e.g. `projects/packages/<shortcut-name>/src/<Shortcut Name>.shortcut`).
+Each shortcut is TypeScript. `projects/packages/<project>/src/main.ts` exports `shortcut({ version })`, built from the actions in `@ios-shortcuts/shortcut`, and `shortcut.config.ts` holds its display name.
 
-### On macOS
+```bash
+pnpm exec nx run <project>:build   # writes dist/<project>/<project>.plist
+pnpm exec nx run <project>:serve   # signs it on a Mac signed into iCloud, then opens it in Shortcuts
+```
 
-1. Open the **Shortcuts** app.
-1. Single-click the shortcut tile so it's highlighted (don't open it for editing).
-1. From the menu bar, choose **File → Export…**.
-1. Save the file as `<Shortcut Name>.shortcut` and move it into the package's `src/` directory.
+Signed `.shortcut` files are never committed - each release carries its own (see [Releasing a Shortcut](#releasing-a-shortcut)).
 
-> Alternatives if **File → Export…** is unavailable: drag the shortcut tile directly onto the Desktop / a Finder window, or right-click → **Share → AirDrop** to yourself.
+### Porting a Shortcut From the Shortcuts App
 
-### On iOS / iPadOS
+1. Export it: on macOS, single-click its tile in **Shortcuts** and choose **File → Export…**; on iOS, long-press it, then **Share → Save to Files**.
+1. Save the export into the project folder (git ignores `*.shortcut`), add `"unwrap": {}` under `nx.targets` in its `package.json`, and decode it as a reference for `src/main.ts`:
 
-1. Open the **Shortcuts** app.
-1. Long-press the shortcut → **Share** → **Save to Files**.
-1. Pick iCloud Drive (or any synced location) and move the file into the package's `src/` directory on your Mac.
+```bash
+pnpm exec nx run <project>:unwrap --input="<Shortcut Name>.shortcut"   # writes dist/<project>/<project>.unwrapped.plist
+```
 
 ## Releasing a Shortcut
 
