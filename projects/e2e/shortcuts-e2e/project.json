@@ -1,0 +1,10 @@
+{
+  "name": "shortcuts-e2e",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "projects/e2e/shortcuts-e2e/src",
+  "projectType": "application",
+  "tags": ["e2e"],
+  "targets": {
+    "test": {}
+  }
+}
