@@ -4,6 +4,15 @@ export function toReleaseTag(name: string, version: string): string {
   return `release/${name}/${version}`;
 }
 
+export function parseReleaseTag(tag: string): { name: string; version: string } {
+  const [prefix, name, version, ...rest] = tag.split('/');
+  if (prefix !== 'release' || !name || !version || rest.length) {
+    throw new Error(`${tag} is not a release tag - expected release/<project>/<version>`);
+  }
+
+  return { name, version };
+}
+
 /** The signed file's name, which is also the release asset's - the signer and the sync must agree on it. */
 export function toAssetName(name: string, version: string): string {
   return `${name}_${version}.shortcut`;

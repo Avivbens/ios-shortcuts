@@ -1,7 +1,17 @@
 import { describe, expect, it } from 'vitest';
-import { toAssetUrl, toDownloadsBadgeUrl, toReleaseUrl } from './release-urls';
+import { parseReleaseTag, toAssetUrl, toDownloadsBadgeUrl, toReleaseUrl } from './release-urls';
 
 describe('release-urls', () => {
+  describe('parseReleaseTag', () => {
+    it('should read the project and version from a tag nx release cut', () => {
+      expect(parseReleaseTag('release/ai-response/0.2.3')).toEqual({ name: 'ai-response', version: '0.2.3' });
+    });
+
+    it('should refuse anything else, such as a branch name', () => {
+      expect(() => parseReleaseTag('feat/attach-asset')).toThrow('release/<project>/<version>');
+    });
+  });
+
   describe('toAssetUrl', () => {
     it('should point at the signed file attached to the release tag', () => {
       expect(toAssetUrl('ai-response', '0.2.3')).toBe(
