@@ -21,6 +21,7 @@
     }
   ],
   "scripts": {
+    "attach-asset": "tsx --env-file=.env projects/workspace/src/scripts/attach-asset.ts",
     "build": "nx run-many --target=build --all",
     "lint": "nx run-many --target=lint --all",
     "prepare": "husky || exit 0",
