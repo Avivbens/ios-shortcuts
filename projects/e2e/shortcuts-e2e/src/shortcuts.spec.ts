@@ -83,8 +83,11 @@ describe('shortcuts', () => {
       return parseShortcutPlist(await readFile(outputPath, 'utf8'));
     }
 
-    it('should list its package.json version in shortcuts.json, which installed copies compare against', () => {
-      expect(readManifest()[name]?.version).toBe(versionOf(name));
+    it('should list a version in shortcuts.json no newer than package.json, as it moves only once a release is attached', () => {
+      const listed = readManifest()[name]?.version ?? '';
+
+      expect(listed).not.toBe('');
+      expect(listed.localeCompare(versionOf(name), undefined, { numeric: true })).toBeLessThanOrEqual(0);
     });
 
     it.skipIf(!ported)('should build from its TypeScript source, carrying its package.json version', async () => {
