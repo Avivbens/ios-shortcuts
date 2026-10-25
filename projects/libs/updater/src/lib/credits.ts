@@ -1,7 +1,12 @@
 import { type Action, comment } from '@ios-shortcuts/shortcut';
 
-const CREDITS =
-  'Created with ❤️ by avivbens\n\nhttps://github.com/Avivbens\n\n\nAll iOS Shortcuts\n\nhttps://github.com/Avivbens/ios-shortcuts';
+const CREDITS = `
+Created with ❤️ by avivbens
+https://github.com/Avivbens
+
+
+All iOS Shortcuts
+https://github.com/Avivbens/ios-shortcuts`.trim();
 
 export function credits(): Action {
   return comment(CREDITS);
