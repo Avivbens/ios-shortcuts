@@ -175,6 +175,9 @@ importers:
       zod:
         specifier: ^4.6.7
         version: 4.6.7
+      zurk:
+        specifier: ^0.11.10
+        version: 0.11.10
     devDependencies:
       '@commitlint/cli':
         specifier: ^21.2.3
@@ -3301,6 +3304,9 @@ packages:
   zod@4.6.7:
     resolution: {integrity: sha512-g8W2D2kU6a8untc053fX1uVBKzM7yqAxW/3zwk83+6RyF2+SKOuV+c0wBDhUwzV1PaGapmZH+rmcUzPf+3CGwg==}
 
+  zurk@0.11.10:
+    resolution: {integrity: sha512-6rX6b2cMQ0Njxl2wa+xPLJVFELmMnBBqdWdkonJY8lET5XRFe3DjTlVZsDb+SG971XKEPD5upb9prE23h+t/LA==}
+
 snapshots:
 
   '@babel/code-frame@7.29.7':
@@ -6301,3 +6307,5 @@ snapshots:
   yocto-queue@0.1.0: {}
 
   zod@4.6.7: {}
+
+  zurk@0.11.10: {}
