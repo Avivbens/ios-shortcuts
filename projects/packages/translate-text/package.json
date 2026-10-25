@@ -10,9 +10,13 @@
   },
   "nx": {
     "sourceRoot": "projects/packages/translate-text/src",
-    "projectType": "library",
+    "projectType": "application",
     "name": "translate-text",
     "targets": {
+      "build": {},
+      "sign": {},
+      "serve": {},
+      "lint": {},
       "nx-release-publish": {
         "options": {
           "packageJson": "projects/packages/translate-text/package.json",
