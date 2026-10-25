@@ -299,6 +299,8 @@ importers:
 
   projects/libs/shortcut-plist: {}
 
+  projects/libs/updater: {}
+
   projects/libs/utils: {}
 
   projects/packages/ai-response: {}
