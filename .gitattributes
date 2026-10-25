@@ -1,2 +1,0 @@
-*.shortcut filter=lfs diff=lfs merge=lfs -text
-**/*.shortcut filter=lfs diff=lfs merge=lfs -text
