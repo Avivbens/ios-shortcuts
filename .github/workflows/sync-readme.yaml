@@ -42,5 +42,10 @@ jobs:
           git pull
           pnpm run sync-readme
           git add README.md shortcuts.json
+          # Two attaches in a row dispatch two runs, and the first usually syncs both files
+          if git diff --cached --quiet; then
+            echo "README.md and shortcuts.json are already in sync"
+            exit 0
+          fi
           git commit -m "docs: update README links [skip ci]"
           git push
