@@ -5,6 +5,9 @@ dist
 tmp
 /out-tsc
 
+# signed shortcuts - releases carry them, the repo never does
+*.shortcut
+
 # dependencies
 node_modules
 
