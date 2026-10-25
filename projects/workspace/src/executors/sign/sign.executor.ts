@@ -1,6 +1,7 @@
 import { join } from 'node:path';
 import { readShortcutConfig, signShortcut } from '@ios-shortcuts/builder';
 import { type ExecutorContext, logger } from '@nx/devkit';
+import { toAssetName } from '../../release/release-urls';
 import { getProject } from '../common/get-project';
 import { getVersion } from '../common/get-version';
 import type { SignExecutorSchema } from './sign.schema';
@@ -12,7 +13,7 @@ export async function signExecutor(
   const { name, projectRoot } = getProject(context);
   const version = await getVersion(projectRoot, options.version);
   const { name: displayName } = await readShortcutConfig(projectRoot);
-  const outputPath = join(context.root, 'dist', name, `${name}_${version}.shortcut`);
+  const outputPath = join(context.root, 'dist', name, toAssetName(name, version));
 
   const sha256 = await signShortcut({
     inputPath: join(context.root, 'dist', name, `${name}.plist`),
