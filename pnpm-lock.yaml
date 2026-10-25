@@ -267,7 +267,11 @@ importers:
         specifier: ^5.0.5
         version: 5.0.5(@types/node@22.20.5)(@vitest/coverage-v8@5.0.5)(vite@8.3.5(@types/node@22.20.5)(jiti@2.7.0)(yaml@2.9.0))
 
-  projects/e2e/shortcuts-e2e: {}
+  projects/e2e/shortcuts-e2e:
+    devDependencies:
+      '@ios-shortcuts/builder':
+        specifier: workspace:*
+        version: link:../../libs/builder
 
   projects/libs/builder:
     dependencies:
