@@ -48,6 +48,19 @@ When adding or updating a shortcut, you need to export the `.shortcut` file from
 1. Long-press the shortcut → **Share** → **Save to Files**.
 1. Pick iCloud Drive (or any synced location) and move the file into the package's `src/` directory on your Mac.
 
+## Releasing a Shortcut
+
+Merging to `master` cuts a `release/<project>/<version>` tag and its GitHub release. Signing needs a Mac signed into iCloud, so the signed file is attached from your Mac, never from CI:
+
+```bash
+git fetch --tags
+git switch --detach release/<project>/<version>
+pnpm install --frozen-lockfile
+pnpm run attach-asset release/<project>/<version>
+```
+
+`attach-asset` signs the shortcut, uploads `<project>_<version>.shortcut` to the release, and dispatches the **Sync README Links** workflow. That workflow points the README table and `shortcuts.json` at the new file, and installed copies then offer the update.
+
 ## Commit Message Guidelines
 
 We follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification. Make sure your commit messages follow the format below:
