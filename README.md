@@ -29,10 +29,20 @@
 
 ## Shortcuts
 
-| Shortcut                                                         | Description                                                                  | Author                                                                    | Download                                                                                                                                   |
-| ---------------------------------------------------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| [**AI Response**](projects/packages/ai-response/README.md)       | Get AI suggestions for your current chat (support any chat app)              | [Aviv Ben Shahar](https://www.linkedin.com/in/aviv-ben-shahar-33583b211/) | [Download](https://github.com/Avivbens/ios-shortcuts/raw/refs/heads/master/projects/packages/ai-response/src/AI%20Response.shortcut)       |
-| [**Translate Text**](projects/packages/translate-text/README.md) | Translate text from the Share Sheet, clipboard, or free-style input using AI | [Aviv Ben Shahar](https://www.linkedin.com/in/aviv-ben-shahar-33583b211/) | [Download](https://github.com/Avivbens/ios-shortcuts/raw/refs/heads/master/projects/packages/translate-text/src/Translate%20Text.shortcut) |
+<div align="center">
+
+<!-- TABLE_START -->
+
+| Shortcut                                                       | Description                                                                  | Latest Release                                                                                | Download Link                                                                                                                                       | Downloads                                                                                                                                                                                                              |
+| -------------------------------------------------------------- | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [AI Response](./projects/packages/ai-response/README.md)       | Get AI suggestions for your current chat (support any chat app)              | [v0.2.2](https://github.com/Avivbens/ios-shortcuts/releases/tag/release/ai-response/0.2.2)    | [Download Shortcut](https://github.com/Avivbens/ios-shortcuts/raw/refs/heads/master/projects/packages/ai-response/src/AI%20Response.shortcut)       | [![Version Downloads](https://img.shields.io/github/downloads/Avivbens/ios-shortcuts/release%2Fai-response%2F0.2.2/total?label=Version%20Downloads&color=blue)](https://github.com/Avivbens/ios-shortcuts/releases)    |
+| [Translate Text](./projects/packages/translate-text/README.md) | Translate text from the Share Sheet, clipboard, or free-style input using AI | [v0.2.3](https://github.com/Avivbens/ios-shortcuts/releases/tag/release/translate-text/0.2.3) | [Download Shortcut](https://github.com/Avivbens/ios-shortcuts/raw/refs/heads/master/projects/packages/translate-text/src/Translate%20Text.shortcut) | [![Version Downloads](https://img.shields.io/github/downloads/Avivbens/ios-shortcuts/release%2Ftranslate-text%2F0.2.3/total?label=Version%20Downloads&color=blue)](https://github.com/Avivbens/ios-shortcuts/releases) |
+
+<!-- TABLE_END -->
+
+### ![Total Downloads](https://img.shields.io/github/downloads/Avivbens/ios-shortcuts/total?label=Total%20Downloads&color=blue)
+
+</div>
 
 ---
 
@@ -54,9 +64,9 @@ This repository serves as a **monorepo** for all of my iOS Shortcuts. By keeping
 
 ## Usage
 
-1. **Select your desire shortcut** under the [packages](projects/packages) directory.
-2. **Download the shortcut** located under the `src` directory.
-   - Tap the download link.
+1. **Pick a shortcut** from the [Shortcuts](#shortcuts) table.
+2. **Download the shortcut** from its release.
+   - Tap its **Download Shortcut** link.
    - Open the shortcut in the Shortcuts app.
    - Review the actions and customize as needed.
    - Save the shortcut to your library.
