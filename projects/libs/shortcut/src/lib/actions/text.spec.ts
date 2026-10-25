@@ -29,7 +29,7 @@ describe('text', () => {
     it('should store a custom name and use it in references, as "JavaScript" is', () => {
       const script = textAction('return 1;', { name: 'JavaScript' });
 
-      const [named, stored] = parametersOf([script, setVariable('code', outputOf(script))]);
+      const [named, stored] = parametersOf([script, setVariable(variable('code'), outputOf(script))]);
 
       expect(named).toMatchObject({ CustomOutputName: 'JavaScript' });
       expect(stored?.['WFInput']).toMatchObject({ Value: { OutputName: 'JavaScript' } });
@@ -38,7 +38,7 @@ describe('text', () => {
     it('should name an unnamed output "Text"', () => {
       const value = textAction('5');
 
-      const [, stored] = parametersOf([value, setVariable('numOfResults', outputOf(value))]);
+      const [, stored] = parametersOf([value, setVariable(variable('numOfResults'), outputOf(value))]);
 
       expect(stored?.['WFInput']).toMatchObject({ Value: { OutputName: 'Text' } });
     });

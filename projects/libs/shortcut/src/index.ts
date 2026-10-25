@@ -15,5 +15,6 @@ export {
   type Reference,
   type Step,
   type TextTemplate,
+  type VariableReference,
   rawAction,
 } from './lib/step';

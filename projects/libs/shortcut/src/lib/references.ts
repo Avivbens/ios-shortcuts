@@ -1,6 +1,7 @@
-import { type Reference, type Step, TOKEN, type TextTemplate } from './step';
+import { type Reference, type Step, TOKEN, type TextTemplate, type VariableReference } from './step';
 
-export function variable(name: string): Reference {
+/** Declared once per shortcut, since `setVariable` takes the handle - a misspelled name then fails to compile. */
+export function variable(name: string): VariableReference {
   return { [TOKEN]: 'reference', kind: 'variable', name };
 }
 

@@ -1,4 +1,13 @@
-import { type Action, type Block, type Reference, type Step, type TextTemplate, controlFlow, rawAction } from '../step';
+import {
+  type Action,
+  type Block,
+  type Reference,
+  type Step,
+  type TextTemplate,
+  type VariableReference,
+  controlFlow,
+  rawAction,
+} from '../step';
 
 export type MenuItem = [title: string, steps: Step[]];
 
@@ -9,8 +18,8 @@ export function comment(message: string): Action {
   return rawAction('is.workflow.actions.comment', { WFCommentActionText: message });
 }
 
-export function setVariable(name: string, value: Reference): Action {
-  return rawAction('is.workflow.actions.setvariable', { WFInput: value, WFVariableName: name });
+export function setVariable(target: VariableReference, value: Reference): Action {
+  return rawAction('is.workflow.actions.setvariable', { WFInput: value, WFVariableName: target.name });
 }
 
 export function ask({ prompt, inputType }: { prompt: string; inputType?: string }): Action {
