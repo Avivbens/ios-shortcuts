@@ -78,9 +78,9 @@ describe('shortcuts', () => {
   describe.each(shortcuts)('%s', (name) => {
     const ported = existsSync(join(projectRootOf(name), SHORTCUT_ENTRY_FILE));
 
-    async function build(): Promise<ReturnType<typeof parseShortcutPlist>> {
+    async function build(version = versionOf(name)): Promise<ReturnType<typeof parseShortcutPlist>> {
       const outputPath = join(outputDir, `${name}.plist`);
-      await compileShortcut({ projectRoot: projectRootOf(name), name, version: versionOf(name), outputPath });
+      await compileShortcut({ projectRoot: projectRootOf(name), name, version, outputPath });
 
       return parseShortcutPlist(await readFile(outputPath, 'utf8'));
     }
@@ -99,11 +99,13 @@ describe('shortcuts', () => {
     });
 
     it.skipIf(!ported || process.platform !== 'darwin')(
-      'should match the signed shortcut it replaces, apart from UUIDs',
+      'should match the signed shortcut it replaces at the version it carries, apart from UUIDs',
       async () => {
         const signed = await readSignedShortcut(signedShortcutOf(name));
+        /** A release moves package.json past the committed signed file, so build at the file's own version. */
+        const version = getVariableText(signed, VERSION_VARIABLE) ?? versionOf(name);
 
-        expect(toComparableWorkflow(await build())).toEqual(toComparableWorkflow(signed));
+        expect(toComparableWorkflow(await build(version))).toEqual(toComparableWorkflow(signed));
       },
     );
   });
