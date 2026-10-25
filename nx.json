@@ -108,17 +108,7 @@
       }
     },
     "conventionalCommits": {
-      "types": {
-        "docs": {
-          "semverBump": "patch"
-        },
-        "feat": {
-          "semverBump": "none"
-        },
-        "fix": {
-          "semverBump": "none"
-        }
-      }
+      "useCommitScope": false
     },
     "releaseTag": {
       "pattern": "release/{projectName}/{version}"
