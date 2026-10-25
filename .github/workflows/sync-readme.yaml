@@ -1,0 +1,46 @@
+name: Sync README Links 🔗
+
+on:
+  # Dispatched by `pnpm run attach-asset` once the signed shortcut is attached - at release time there is no asset yet
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+  deployments: write
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-attach:
+    runs-on: ubuntu-latest
+    name: Sync README Links 🔗
+    env:
+      HUSKY: 0
+    steps:
+      - name: 📀 Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          # Push over SSH so the README commit goes through the deploy key, a ruleset bypass actor
+          ssh-key: ${{ secrets.RELEASE_DEPLOY_KEY }}
+
+      - name: Git Config
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: 🖥️ Setup Env
+        uses: ./.github/workflows/install
+
+      - name: Update README links 🔗
+        run: |
+          git reset --hard
+          git checkout master
+          git pull
+          pnpm run sync-readme
+          git add README.md shortcuts.json
+          git commit -m "docs: update README links [skip ci]"
+          git push
