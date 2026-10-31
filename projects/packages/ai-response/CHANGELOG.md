@@ -1,3 +1,13 @@
+## 0.2.5 (2026-10-31)
+
+### 🚀 Features
+
+- **ai-response:** pick ChatGPT or Apple Intelligence on import ([954ef32](https://github.com/Avivbens/ios-shortcuts/commit/954ef32))
+
+### ❤️ Thank You
+
+- Aviv Ben Shahar
+
 ## 0.2.4 (2026-10-31)
 
 ### 🩹 Fixes
