@@ -1,31 +1,23 @@
 <div align="center">
-
-# iOS Shortcuts Monorepo
-
-![iOS](https://img.shields.io/badge/Platform-iOS-blue.svg)
-![Automation](https://img.shields.io/badge/Focus-Automation-lightgrey.svg)
-![Status](https://img.shields.io/badge/Status-Active-success.svg)
-![License](https://img.shields.io/badge/License-MIT-green.svg)
+  <h1>iOS Shortcuts 📱 - AI Shortcuts for iPhone and iPad</h1>
+  <p><strong>Shortcuts written in TypeScript, shipped as signed releases, and kept up to date on your device</strong></p>
+  <p>
+    <a href="https://github.com/Avivbens/ios-shortcuts/releases">
+      <img src="https://img.shields.io/github/v/release/Avivbens/ios-shortcuts" alt="GitHub Release">
+    </a>
+    <a href="https://github.com/Avivbens/ios-shortcuts/blob/master/LICENSE">
+      <img src="https://img.shields.io/github/license/Avivbens/ios-shortcuts" alt="License">
+    </a>
+    <a href="https://github.com/Avivbens/ios-shortcuts/stargazers">
+      <img src="https://img.shields.io/github/stars/Avivbens/ios-shortcuts" alt="GitHub Stars">
+    </a>
+    <img src="https://img.shields.io/badge/platform-iOS%20%7C%20iPadOS-000000?logo=apple&logoColor=white" alt="iOS and iPadOS">
+    <img src="https://img.shields.io/badge/built%20with-TypeScript-3178c6?logo=typescript&logoColor=white" alt="Built with TypeScript">
+  </p>
 
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/kcao7snkgx)
 
-> A comprehensive monorepo containing various **iOS Shortcuts**. Designed to streamline, automate, and enhance everyday tasks on iOS devices.
-
 </div>
-
----
-
-## Table of Contents
-
-1. [Shortcuts](#shortcuts)
-1. [About the Repository](#about-the-repository)
-1. [Features](#features)
-1. [Usage](#usage)
-1. [Contributing](#contribContributing)
-1. [License](#license)
-1. [Contact](#contact)
-
----
 
 ## Shortcuts
 
@@ -44,57 +36,47 @@
 
 </div>
 
----
+## 📥 Installation
 
-## About the Repository
+1. Tap the **Download Shortcut** link for the shortcut you want in the table above.
+2. Open the file in the **Shortcuts** app, review its actions, and tap **Add Shortcut**.
+3. Run it from the Share Sheet, Siri, your Home Screen or the Action Button.
 
-This repository serves as a **monorepo** for all of my iOS Shortcuts. By keeping them in one place, it becomes easier to manage version control, updates, and seamless distribution. Whether you're looking to automate your day-to-day tasks, explore productivity enhancements, or unlock new iOS features, you'll find a shortcut that suits your needs here.
+**Note:** AI-powered shortcuts (AI Response, Translate Text) use the ChatGPT app, so install and sign in to it first.
 
----
+## 🚀 Overview
 
-## Features
+iOS Shortcuts is a collection of shortcuts managed like software: every shortcut is TypeScript source, built and checked in CI, signed, and attached to a GitHub release.
 
-- **Automation**: Replace repetitive tasks with single-tap or Siri-triggered shortcuts.
-- **Modular**: Each shortcut is self-contained, making it easy to add, remove, or update.
-- **Scalable**: Continuously add new shortcuts without cluttering your workspace.
-- **Version Control**: Track changes over time and roll back if needed.
-- **Cross-Device Compatibility**: Works seamlessly across iPhones and iPads.
+**What Does iOS Shortcuts Offer?**
 
----
+- 🔄 **Updates on your device:** installed shortcuts check for new releases on their own and offer the newer download.
+- 📦 **Versioned releases:** every change ships as a tagged release with a signed `.shortcut` and release notes.
+- 🛠️ **Shortcuts as code:** each shortcut is built from `src/main.ts` on a small typed API, reviewed in pull requests instead of edited by hand.
 
-## Usage
+```mermaid
+flowchart LR
+  source["TypeScript source<br/>src/main.ts"] --> build["Nx build<br/>shortcut plist"]
+  build --> sign["Signed on a Mac<br/>through iCloud"]
+  sign --> release["GitHub release<br/>signed .shortcut"]
+  release --> phone["Your iPhone<br/>offers the update"]
+```
 
-1. **Pick a shortcut** from the [Shortcuts](#shortcuts) table.
-2. **Download the shortcut** from its release.
-   - Tap its **Download Shortcut** link.
-   - Open the shortcut in the Shortcuts app.
-   - Review the actions and customize as needed.
-   - Save the shortcut to your library.
-3. **Run the shortcut**:
+## 🤝 Contributing
 
-   - Tap the shortcut tile.
-   - Invoke it via Siri by using the shortcut's name.
-   - Add it to the Home Screen for quick access.
+We welcome contributions! New shortcuts start from a generator, `nx g @ios-shortcuts/workspace:generate-shortcut <name>`. Please check out our [Contributing Guide](CONTRIBUTING.md) for writing, porting and releasing a shortcut.
 
----
+## 📜 License
 
-## Contributing
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for further details.
 
-Good to know that you want to contribute to this project! 🎉
+## 🙏 Acknowledgments
 
-See [CONTRIBUTING.md](CONTRIBUTING.md)
-
-## License
-
-This repository is released under the [MIT License](LICENSE).
-You're free to use, modify, and distribute the code within your own projects.
+- Kudos to [Nx](https://nx.dev) for their powerful monorepo capabilities.
+- A huge thank you to all our [contributors](https://github.com/Avivbens/ios-shortcuts/graphs/contributors) who help make iOS Shortcuts better every day.
 
 ---
 
-## Contact
-
-- **GitHub**: [Avivbens](https://github.com/avivbens)
-- **Email**: [avivbens87@gmail.com](mailto:avivbens87@gmail.com)
-- **LinkedIn**: [Aviv Ben Shahar](https://www.linkedin.com/in/aviv-ben-shahar-33583b211/)
-
-Feel free to reach out if you have any questions, suggestions, or requests.
+<div align="center">
+  <sub>Built with ❤️ by <a href="https://github.com/Avivbens">Aviv Ben Shahar</a> · <a href="https://www.linkedin.com/in/aviv-ben-shahar-33583b211/">LinkedIn</a></sub>
+</div>
