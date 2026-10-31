@@ -26,16 +26,22 @@ export function toReleaseComment(tags: string[]): string {
   ].join('\n');
 }
 
-/** GitHub ties only some commits of a rebase-merged PR to it, so every commit of the push is looked up. */
+/**
+ * GitHub links a pushed commit to its PR some time after the push, so a lookup by commit can find nothing. A merged
+ * PR's `merge_commit_sha` is set as it merges - for a rebase merge, the last commit it added - so the push is matched
+ * against that instead.
+ */
 async function getMergedPullRequests(before: string, after: string): Promise<number[]> {
-  const commits = toLines(await $`git rev-list ${`${before}..${after}`}`);
-  const numbers = await Promise.all(
-    commits.map(async (sha) =>
-      toLines(await $`gh api ${`repos/{owner}/{repo}/commits/${sha}/pulls`} --jq ${'.[].number'}`),
-    ),
+  const pushed = new Set(toLines(await $`git rev-list ${`${before}..${after}`}`));
+  const merged = toLines(
+    await $`gh api ${'repos/{owner}/{repo}/pulls?state=closed&sort=updated&direction=desc&per_page=100'} --jq ${'.[] | select(.merged_at) | "\\(.number) \\(.merge_commit_sha)"'}`,
   );
 
-  return [...new Set(numbers.flat().map(Number))].sort((left, right) => left - right);
+  return merged
+    .map((line) => line.split(' '))
+    .filter(([, sha]) => sha !== undefined && pushed.has(sha))
+    .map(([number]) => Number(number))
+    .sort((left, right) => left - right);
 }
 
 /** Comments the attach commands on every PR the push merged, once `nx release` has tagged HEAD. */
@@ -47,6 +53,10 @@ export async function commentReleaseOnPullRequests(before: string, after: string
 
   const pullRequests = await getMergedPullRequests(before, after);
   const body = toReleaseComment(tags);
+  if (!pullRequests.length) {
+    throw new Error(`${tags.join(', ')} found no merged PR in ${before}..${after} to comment on\n\n${body}`);
+  }
+
   await Promise.all(pullRequests.map((number) => $({ input: body })`gh pr comment ${number} --body-file -`));
 
   return pullRequests;
