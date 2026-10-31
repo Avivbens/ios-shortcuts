@@ -6,7 +6,6 @@ import { NUM_OF_RESULTS } from './variables';
 
 export function shortcut({ version }: ShortcutContext): ShortcutWorkflow {
   const numOfResults = textAction('5');
-  const endOfConfiguration = comment('—— End of User Configuration ——');
 
   return createShortcut(
     {
@@ -39,8 +38,7 @@ export function shortcut({ version }: ShortcutContext): ShortcutWorkflow {
       WFWorkflowOutputContentItemClasses: [],
       WFWorkflowImportQuestions: [
         {
-          /** The signed release attaches this to the comment after the count, not the count, so the port does too. */
-          step: endOfConfiguration,
+          step: numOfResults,
           Category: 'Parameter',
           DefaultValue: '5',
           ParameterKey: 'WFTextActionText',
@@ -56,7 +54,7 @@ export function shortcut({ version }: ShortcutContext): ShortcutWorkflow {
       comment('—— User Configuration ——\n\nSetup number of results'),
       numOfResults,
       setVariable(NUM_OF_RESULTS, outputOf(numOfResults)),
-      endOfConfiguration,
+      comment('—— End of User Configuration ——'),
       ...updateCheck({ name: 'ai-response', version }),
       ...chat(),
     ],
