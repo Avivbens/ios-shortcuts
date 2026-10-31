@@ -43,10 +43,10 @@ Signed `.shortcut` files are never committed - each release carries its own (see
 ### Porting a Shortcut From the Shortcuts App
 
 1. Export it: on macOS, single-click its tile in **Shortcuts** and choose **File → Export…**; on iOS, long-press it, then **Share → Save to Files**.
-1. Save the export into the project folder (git ignores `*.shortcut`), add `"unwrap": {}` under `nx.targets` in its `package.json`, and decode it as a reference for `src/main.ts`:
+1. Save the export anywhere in the repo (git ignores `*.shortcut`) and decode it as a reference for `src/main.ts`:
 
 ```bash
-pnpm exec nx run <project>:unwrap --input="<Shortcut Name>.shortcut"   # writes dist/<project>/<project>.unwrapped.plist
+pnpm run unwrap "<Shortcut Name>.shortcut"   # path from the repo root, writes dist/<Shortcut Name>.unwrapped.plist
 ```
 
 ## Releasing a Shortcut

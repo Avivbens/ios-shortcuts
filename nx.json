@@ -81,9 +81,6 @@
     },
     "test": {
       "inputs": ["default", "^default", "{workspaceRoot}/vitest.shared.mts"]
-    },
-    "unwrap": {
-      "executor": "@ios-shortcuts/workspace:unwrap"
     }
   },
   "release": {

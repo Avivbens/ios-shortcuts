@@ -9,11 +9,6 @@
       "implementation": "./src/executors/sign/sign.executor",
       "schema": "./src/executors/sign/sign.schema.json",
       "description": "sign executor"
-    },
-    "unwrap": {
-      "implementation": "./src/executors/unwrap/unwrap.executor",
-      "schema": "./src/executors/unwrap/unwrap.schema.json",
-      "description": "unwrap executor"
     }
   }
 }

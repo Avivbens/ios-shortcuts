@@ -27,7 +27,8 @@
     "prepare": "husky || exit 0",
     "release-comment": "tsx --env-file=.env projects/workspace/src/scripts/release-comment.ts",
     "sync-readme": "tsx --env-file=.env projects/workspace/src/scripts/sync-readme.ts",
-    "test": "nx run-many --target=test --all"
+    "test": "nx run-many --target=test --all",
+    "unwrap": "tsx projects/workspace/src/scripts/unwrap.ts"
   },
   "dependencies": {
     "plist": "^3.1.1",
