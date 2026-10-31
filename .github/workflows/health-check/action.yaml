@@ -33,6 +33,16 @@ inputs:
     default: 'true'
     required: false
 
+  run-typecheck-command:
+    description: 'Run typecheck command, default is `pnpm exec nx run-many --target=typecheck`'
+    default: 'pnpm exec nx run-many --target=typecheck'
+    required: false
+
+  run-typecheck:
+    description: 'Run typecheck, off unless a workflow asks for it'
+    default: 'false'
+    required: false
+
 runs:
   using: composite
   steps:
@@ -56,3 +66,9 @@ runs:
       shell: bash
       run: |
         ${{ inputs.run-lint-command }}
+
+    - name: 🔎 Typecheck
+      if: ${{ inputs.run-typecheck == 'true' }}
+      shell: bash
+      run: |
+        ${{ inputs.run-typecheck-command }}

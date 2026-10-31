@@ -33,3 +33,5 @@ jobs:
           run-lint-command: 'pnpm exec nx affected --target=lint'
           run-build: true
           run-build-command: 'pnpm exec nx affected --target=build'
+          run-typecheck: true
+          run-typecheck-command: 'pnpm exec nx affected --target=typecheck'
