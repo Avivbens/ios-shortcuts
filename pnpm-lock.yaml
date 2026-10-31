@@ -279,7 +279,11 @@ importers:
         specifier: workspace:*
         version: link:../../libs/builder
 
-  projects/libs/ai-model: {}
+  projects/libs/ai-model:
+    dependencies:
+      '@ios-shortcuts/shortcut':
+        specifier: workspace:*
+        version: link:../shortcut
 
   projects/libs/builder:
     dependencies:
@@ -320,6 +324,9 @@ importers:
 
   projects/packages/ai-response:
     devDependencies:
+      '@ios-shortcuts/ai-model':
+        specifier: workspace:*
+        version: link:../../libs/ai-model
       '@ios-shortcuts/builder':
         specifier: workspace:*
         version: link:../../libs/builder
@@ -332,6 +339,9 @@ importers:
 
   projects/packages/translate-text:
     devDependencies:
+      '@ios-shortcuts/ai-model':
+        specifier: workspace:*
+        version: link:../../libs/ai-model
       '@ios-shortcuts/builder':
         specifier: workspace:*
         version: link:../../libs/builder
