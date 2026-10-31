@@ -133,6 +133,18 @@ describe('scripting', () => {
       expect(start).toMatchObject({ WFCondition: 4, WFConditionalActionString: 'true' });
       expect(start).not.toHaveProperty('WFNumberValue');
     });
+
+    it('should open the otherwise branch with an Otherwise action in the same group', () => {
+      const [start, then, otherwise, fallback, end] = parametersOf([
+        ifEquals(variable('aiModel'), 'Cloud', [comment('Cloud')], { otherwise: [comment('ChatGPT')] }),
+      ]);
+      const group = start?.['GroupingIdentifier'];
+
+      expect(then).toEqual({ WFCommentActionText: 'Cloud' });
+      expect(otherwise).toEqual({ GroupingIdentifier: group, WFControlFlowMode: 1 });
+      expect(fallback).toEqual({ WFCommentActionText: 'ChatGPT' });
+      expect(end).toEqual({ GroupingIdentifier: group, WFControlFlowMode: 2 });
+    });
   });
 
   describe('getDictionaryValue', () => {

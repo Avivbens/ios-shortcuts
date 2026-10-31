@@ -55,8 +55,16 @@ export function randomNumber({ minimum, maximum }: { minimum: number; maximum: n
   );
 }
 
-/** A number is compared as a number and a string as text, each under the key Shortcuts uses for it. */
-export function ifEquals(input: Reference, value: string | number, steps: Step[]): Block {
+/**
+ * A number is compared as a number and a string as text, each under the key Shortcuts uses for it. Shortcuts' Otherwise
+ * action holds no parameters, so its marker is empty.
+ */
+export function ifEquals(
+  input: Reference,
+  value: string | number,
+  steps: Step[],
+  { otherwise }: { otherwise?: Step[] } = {},
+): Block {
   return controlFlow(
     'is.workflow.actions.conditional',
     {
@@ -64,7 +72,7 @@ export function ifEquals(input: Reference, value: string | number, steps: Step[]
       WFInput: { Type: 'Variable', Variable: input },
       ...(typeof value === 'number' ? { WFNumberValue: String(value) } : { WFConditionalActionString: value }),
     },
-    [{ steps }],
+    [{ steps }, ...(otherwise === undefined ? [] : [{ marker: {}, steps: otherwise }])],
   );
 }
 
