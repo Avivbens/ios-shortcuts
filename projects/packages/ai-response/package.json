@@ -5,6 +5,7 @@
   "description": "Get AI suggestions for your current chat (support any chat app)",
   "dependencies": {},
   "devDependencies": {
+    "@ios-shortcuts/ai-model": "workspace:*",
     "@ios-shortcuts/builder": "workspace:*",
     "@ios-shortcuts/shortcut": "workspace:*",
     "@ios-shortcuts/updater": "workspace:*"

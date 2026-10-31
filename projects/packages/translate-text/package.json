@@ -5,6 +5,7 @@
   "description": "Translate text from the Share Sheet, clipboard, or free-style input using AI",
   "dependencies": {},
   "devDependencies": {
+    "@ios-shortcuts/ai-model": "workspace:*",
     "@ios-shortcuts/builder": "workspace:*",
     "@ios-shortcuts/shortcut": "workspace:*",
     "@ios-shortcuts/updater": "workspace:*"
