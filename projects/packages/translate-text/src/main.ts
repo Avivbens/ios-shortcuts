@@ -1,4 +1,4 @@
-import type { ShortcutWorkflow } from '@ios-shortcuts/builder';
+import type { ShortcutContext, ShortcutWorkflow } from '@ios-shortcuts/builder';
 import {
   type TextTemplate,
   alert,
@@ -17,7 +17,7 @@ import {
   textAction,
   variable,
 } from '@ios-shortcuts/shortcut';
-import { credits } from '@ios-shortcuts/updater';
+import { credits, updateCheck } from '@ios-shortcuts/updater';
 
 const TEXT_TO_TRANSLATE = variable('TextToTranslate');
 const TRANSLATE_TO = variable('TranslateTo');
@@ -46,7 +46,7 @@ ${TEXT_TO_TRANSLATE}
 `;
 }
 
-export function shortcut(): ShortcutWorkflow {
+export function shortcut({ version }: ShortcutContext): ShortcutWorkflow {
   const question = ask({ prompt: 'What do you want to translate?', inputType: 'Text' });
   const languages = list(LANGUAGES);
   const language = chooseFromList(outputOf(languages));
@@ -75,6 +75,7 @@ export function shortcut(): ShortcutWorkflow {
     },
     [
       credits(),
+      ...updateCheck({ name: 'translate-text', version }),
       comment('What to translate?'),
       menu('What to translate?', [
         ['Clipboard', [setVariable(TEXT_TO_TRANSLATE, shortcutInput())]],
