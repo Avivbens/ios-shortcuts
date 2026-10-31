@@ -60,6 +60,8 @@ pnpm install --frozen-lockfile
 pnpm run attach-asset release/<project>/<version>
 ```
 
+The release run also comments these commands, filled in with the new tags, on every PR it released.
+
 `attach-asset` signs the shortcut, uploads `<project>_<version>.shortcut` to the release, and dispatches the **Sync README Links** workflow. That workflow points the README table and `shortcuts.json` at the new file, and installed copies then offer the update.
 
 ## Commit Message Guidelines
