@@ -1,0 +1,22 @@
+import type { ShortcutContext, ShortcutWorkflow } from '@ios-shortcuts/builder';
+import { comment, createShortcut } from '@ios-shortcuts/shortcut';
+import { credits, updateCheck } from '@ios-shortcuts/updater';
+
+export function shortcut({ version }: ShortcutContext): ShortcutWorkflow {
+  return createShortcut(
+    {
+      WFWorkflowClientVersion: '3218.0.4.100',
+      WFWorkflowMinimumClientVersion: 1113,
+      WFWorkflowMinimumClientVersionString: '1113',
+      WFWorkflowIcon: { WFWorkflowIconStartColor: 946986751, WFWorkflowIconGlyphNumber: 61440 },
+      WFWorkflowTypes: [],
+      WFWorkflowInputContentItemClasses: [],
+      WFWorkflowOutputContentItemClasses: [],
+      WFWorkflowImportQuestions: [],
+      WFQuickActionSurfaces: [],
+      WFWorkflowHasOutputFallback: false,
+      WFWorkflowHasShortcutInputVariables: false,
+    },
+    [credits(), ...updateCheck({ name: '<%= name %>', version }), comment('<%= nameTitleCase %> starts here')],
+  );
+}

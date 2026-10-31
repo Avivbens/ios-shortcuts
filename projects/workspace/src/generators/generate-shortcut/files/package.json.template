@@ -1,0 +1,31 @@
+{
+  "name": "@ios-shortcuts/<%= name %>",
+  "version": "0.0.0",
+  "private": true,
+  "description": "<%= description %>",
+  "dependencies": {},
+  "devDependencies": {
+    "@ios-shortcuts/builder": "workspace:*",
+    "@ios-shortcuts/shortcut": "workspace:*",
+    "@ios-shortcuts/updater": "workspace:*"
+  },
+  "nx": {
+    "sourceRoot": "projects/packages/<%= name %>/src",
+    "projectType": "application",
+    "name": "<%= name %>",
+    "targets": {
+      "build": {},
+      "sign": {},
+      "serve": {},
+      "test": {},
+      "nx-release-publish": {
+        "options": {
+          "packageJson": "projects/packages/<%= name %>/package.json",
+          "updateBuildableProjectDepsInPackageJson": false,
+          "updateBuildableProjectDepsInWorkspace": false,
+          "showOutputPath": true
+        }
+      }
+    }
+  }
+}
