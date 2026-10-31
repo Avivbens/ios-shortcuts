@@ -1,0 +1,21 @@
+<div align="center">
+
+# <%= nameTitleCase %>
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/kcao7snkgx)
+
+> <%= description %>
+
+<a id="download" href="https://github.com/Avivbens/ios-shortcuts#shortcuts">
+  <img src="https://www.oiml.org/en/ressources/icons/download-button.jpg/@@images/3139e560-3f59-4ee9-a5e4-71f0ee9535eb.png" alt="Download" width="100" height="100">
+</a>
+
+</div>
+
+## Features
+
+<!-- What the shortcut does, one bullet per feature -->
+
+## Usage
+
+<!-- How to run it: Share Sheet, Siri, Home Screen or Action Button -->

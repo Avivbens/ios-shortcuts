@@ -1,5 +1,10 @@
 {
   "generators": {
+    "generate-shortcut": {
+      "factory": "./src/generators/generate-shortcut/generate-shortcut.generator",
+      "schema": "./src/generators/generate-shortcut/generate-shortcut.schema.json",
+      "description": "generate-shortcut generator"
+    },
     "generate-library": {
       "factory": "./src/generators/generate-library/generate-library.generator",
       "schema": "./src/generators/generate-library/generate-library.schema.json",

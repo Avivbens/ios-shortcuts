@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "$id": "GenerateShortcut",
+  "title": "Generate Shortcut Options",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Shortcut project name in kebab-case; installed copies look themselves up in shortcuts.json by it",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What name would you like to use?"
+    },
+    "description": {
+      "type": "string",
+      "description": "One line for the README table",
+      "x-prompt": "Describe the shortcut in one line"
+    }
+  },
+  "required": ["name", "description"]
+}
