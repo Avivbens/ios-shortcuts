@@ -1,8 +1,8 @@
+import { askAiModel } from '@ios-shortcuts/ai-model';
 import {
   type MenuItem,
   type Step,
   type TextTemplate,
-  askChatGpt,
   chooseFromList,
   comment,
   extractTextFromImage,
@@ -11,22 +11,12 @@ import {
   replaceText,
   setClipboard,
   setVariable,
-  splitText,
   takeScreenshot,
   text,
   textAction,
   trimWhitespace,
 } from '@ios-shortcuts/shortcut';
-import {
-  CLEAN_CONTEXT,
-  CONTEXT,
-  FIXED_DATA,
-  LAST_MESSAGE,
-  NUM_OF_RESULTS,
-  OPTIONS,
-  RESULTS,
-  SELECTED_TONE,
-} from './variables';
+import { CLEAN_CONTEXT, CONTEXT, FIXED_DATA, LAST_MESSAGE, NUM_OF_RESULTS, RESULTS, SELECTED_TONE } from './variables';
 
 type Tone = [title: string, description: string];
 
@@ -48,9 +38,6 @@ const TONES: Tone[] = [
     'Flirt - Playful, confident, and suggestive, using captivating language to create intrigue and attraction',
   ],
 ];
-
-/** The marker ChatGPT is told to put between suggestions, which the reply picker splits on. */
-const SUGGESTION_SEPARATOR = '$$$$$';
 
 function toSenderItem(sender: string): MenuItem {
   const value = textAction(sender);
@@ -105,29 +92,19 @@ ${SELECTED_TONE}
 
 4. If you detect that the conversation has ended, propose a new conversation starter that follows the same tone. It can be related or unrelated to the previous context, as long as it respects the required tone.
 
-5. Output only the suggestions—no explanations or additional text. Separate each suggestion with: ${SUGGESTION_SEPARATOR}
+5. Output only the suggestions - no explanations or additional text.
 
-6. Do not number or bullet the suggestions.
-
-Remember: Output strictly the suggestions, in plain text, each separated by ${SUGGESTION_SEPARATOR}.`;
+6. Do not number or bullet the suggestions.`;
 }
 
-/** Reads the chat on screen, asks ChatGPT for replies in the chosen tone, and copies the one picked. */
+/** Reads the chat on screen, asks the picked AI model for replies in the chosen tone, and copies the one picked. */
 export function chat(): Step[] {
   const screenshot = takeScreenshot();
   const screenText = extractTextFromImage(outputOf(screenshot));
   const cleanContext = replaceText(text`${CONTEXT}`, { find: 'Message...' });
   const labelPrompt = textAction(toLabelPrompt());
-  const labeled = askChatGpt({ prompt: text`${outputOf(labelPrompt)}` });
   const suggestionsPrompt = textAction(toSuggestionsPrompt());
-  const suggestions = askChatGpt({
-    prompt: text`${outputOf(suggestionsPrompt)}`,
-    model: { identifier: 'gpt-4o', name: 'GPT-4o' },
-    continuous: false,
-    newChat: false,
-  });
-  const options = splitText(RESULTS, { separator: SUGGESTION_SEPARATOR });
-  const reply = chooseFromList(OPTIONS);
+  const reply = chooseFromList(RESULTS);
   const trimmedReply = trimWhitespace(text`${outputOf(reply)}`);
 
   return [
@@ -142,15 +119,13 @@ export function chat(): Step[] {
     cleanContext,
     setVariable(CLEAN_CONTEXT, outputOf(cleanContext)),
     labelPrompt,
-    labeled,
-    setVariable(FIXED_DATA, outputOf(labeled)),
-    comment('Prompt GPT - get an AI-suggested response'),
+    askAiModel(outputOf(labelPrompt), FIXED_DATA),
+    comment('Prompt AI - get an AI-suggested response'),
     suggestionsPrompt,
-    suggestions,
-    setVariable(RESULTS, outputOf(suggestions)),
-    comment('Parse results from GPT'),
-    options,
-    setVariable(OPTIONS, outputOf(options)),
+    askAiModel(outputOf(suggestionsPrompt), RESULTS, {
+      list: true,
+      chatGpt: { model: { identifier: 'gpt-6.1-sol', name: 'GPT-6.1 Sol' }, continuous: false, newChat: false },
+    }),
     reply,
     comment('Copy selected response'),
     trimmedReply,
