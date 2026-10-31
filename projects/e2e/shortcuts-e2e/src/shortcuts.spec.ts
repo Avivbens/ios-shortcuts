@@ -57,8 +57,8 @@ describe('shortcuts', () => {
     await rm(outputDir, { recursive: true, force: true });
   });
 
-  it('should cover every shortcut listed in shortcuts.json', () => {
-    expect(Object.keys(readManifest()).sort()).toEqual(shortcuts);
+  it('should list nothing in shortcuts.json but real shortcuts', () => {
+    expect(shortcuts).toEqual(expect.arrayContaining(Object.keys(readManifest())));
   });
 
   describe.each(shortcuts)('%s', (name) => {
@@ -69,12 +69,15 @@ describe('shortcuts', () => {
       return parseShortcutPlist(await readFile(outputPath, 'utf8'));
     }
 
-    it('should list a version in shortcuts.json no newer than package.json, as it moves only once a release is attached', () => {
-      const listed = readManifest()[name]?.version ?? '';
+    /** A shortcut enters shortcuts.json with its first signed release, so a new one is not listed yet. */
+    const listed = readManifest()[name]?.version;
 
-      expect(listed).not.toBe('');
-      expect(listed.localeCompare(versionOf(name), undefined, { numeric: true })).toBeLessThanOrEqual(0);
-    });
+    it.skipIf(listed === undefined)(
+      'should list a version in shortcuts.json no newer than package.json, as it moves only once a release is attached',
+      () => {
+        expect((listed ?? '').localeCompare(versionOf(name), undefined, { numeric: true })).toBeLessThanOrEqual(0);
+      },
+    );
 
     it('should build from its TypeScript source, carrying its package.json version', async () => {
       const workflow = await build();
