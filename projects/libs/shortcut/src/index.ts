@@ -1,3 +1,4 @@
+export * from './lib/actions/apple-intelligence';
 export * from './lib/actions/chatgpt';
 export * from './lib/actions/media';
 export * from './lib/actions/notification';
