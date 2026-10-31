@@ -15,7 +15,6 @@ export async function generateLibraryGenerator(tree: Tree, options: GenerateLibr
     tags: [],
     targets: {
       test: {},
-      lint: {},
     },
   });
 
