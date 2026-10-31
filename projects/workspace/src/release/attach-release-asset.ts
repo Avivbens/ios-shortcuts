@@ -1,15 +1,15 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { $ } from 'zurk';
+import { bash } from './bash';
 import { parseReleaseTag, toAssetName } from './release-urls';
 import { loadShortcutProjects } from './shortcut-projects';
 
 /** The asset must be the released source itself, so it is signed only from a clean checkout of the tag. */
 async function assertCheckedOutAt(tag: string): Promise<void> {
   const [head, tagged, changes] = await Promise.all([
-    $`git rev-parse HEAD`,
-    $`git rev-parse ${`${tag}^{commit}`}`,
-    $`git status --porcelain`,
+    bash()`git rev-parse HEAD`,
+    bash()`git rev-parse ${`${tag}^{commit}`}`,
+    bash()`git status --porcelain`,
   ]);
   if (head.toString() !== tagged.toString()) {
     throw new Error(`HEAD is not ${tag} - run \`git switch --detach ${tag}\` first`);
@@ -30,14 +30,14 @@ export async function attachReleaseAsset(root: string, tag: string): Promise<str
     throw new Error(`${name} is not a shortcut in this workspace`);
   }
 
-  await $`pnpm exec nx run ${`${name}:sign:ci`} -- --version ${version}`;
+  await bash()`pnpm exec nx run ${`${name}:sign:ci`} -- --version ${version}`;
   const asset = join(root, 'dist', name, toAssetName(project.displayName));
   if (!existsSync(asset)) {
     throw new Error(`sign:ci did not write ${asset}`);
   }
 
-  await $`gh release upload ${tag} ${asset}`;
-  await $`gh workflow run sync-readme.yaml`;
+  await bash()`gh release upload ${tag} ${asset}`;
+  await bash()`gh workflow run sync-readme.yaml`;
 
   return asset;
 }
