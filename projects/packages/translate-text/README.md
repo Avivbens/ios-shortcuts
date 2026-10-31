@@ -55,7 +55,9 @@ The **Translate Text Shortcut** is an iOS shortcut that translates text into you
 - An **iOS device** running iOS 17 or later (iOS 18+ recommended).
 - The **Shortcuts** app (pre-installed on most iOS devices).
 - **Internet connection** (translation requires sending content to an AI service).
-- **ChatGPT app** installed and signed in, used to query the AI model.
+- **An AI model**, picked when you add the shortcut:
+  - **Cloud** (default) or **On-Device** - Apple Intelligence, on an iPhone or iPad that supports it.
+  - **ChatGPT** - the ChatGPT app, installed and signed in.
 
 ---
 
@@ -110,6 +112,11 @@ The **Translate Text Shortcut** is an iOS shortcut that translates text into you
 ---
 
 ## Configuration
+
+1. **AI Model**
+
+   - When you add the shortcut, answer **Cloud** (the default, Apple Intelligence on Private Cloud Compute), **On-Device** (Apple Intelligence on your device) or **ChatGPT** (the ChatGPT app). Any other answer uses ChatGPT.
+   - To switch later, edit the text under **Setup AI model** at the top of the shortcut.
 
 1. **Add / Remove Languages**
 
