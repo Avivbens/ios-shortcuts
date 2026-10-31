@@ -7,6 +7,7 @@ import {
   type Step,
   type VariableReference,
   askChatGpt,
+  combineText,
   comment,
   ifEquals,
   outputOf,
@@ -51,7 +52,8 @@ export function aiModelSetup(): AiModelSetup {
 
 /**
  * The import answer is free text, so anything but Cloud or On-Device runs ChatGPT. With `list`, Apple Intelligence
- * returns the list itself, while the ChatGPT app answers only in text, split on a marker its prompt asks for.
+ * returns the list itself, rejoined and split into plain text since Choose from List cuts its own items to one line,
+ * while the ChatGPT app answers only in text, split on a marker its prompt asks for.
  */
 export function askAiModel(
   prompt: Reference,
@@ -61,9 +63,17 @@ export function askAiModel(
   const store = (steps: Action[], answer: Action): Step[] => [...steps, setVariable(target, outputOf(answer))];
 
   function appleIntelligence(model: AppleIntelligenceModel): Step[] {
-    const response = useModel({ prompt: text`${prompt}`, model, outputType: list ? 'List' : 'Text' });
+    if (!list) {
+      const response = useModel({ prompt: text`${prompt}`, model, outputType: 'Text' });
 
-    return store([response], response);
+      return store([response], response);
+    }
+
+    const response = useModel({ prompt: text`${prompt}`, model, outputType: 'List' });
+    const combined = combineText(outputOf(response), { separator: LIST_SEPARATOR });
+    const items = splitText(outputOf(combined), { separator: LIST_SEPARATOR });
+
+    return store([response, combined, items], items);
   }
 
   function chatGptApp(): Step[] {
