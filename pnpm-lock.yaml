@@ -279,6 +279,8 @@ importers:
         specifier: workspace:*
         version: link:../../libs/builder
 
+  projects/libs/ai-model: {}
+
   projects/libs/builder:
     dependencies:
       '@ios-shortcuts/shortcut-file':
