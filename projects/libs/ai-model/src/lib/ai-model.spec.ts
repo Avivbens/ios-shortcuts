@@ -109,13 +109,21 @@ describe('ai-model', () => {
       });
     });
 
-    it("should ask Apple Intelligence for a list, and split the ChatGPT app's text on the marker its prompt asks for", () => {
-      const [cloud, onDevice, chatGpt] = answersOf(askAiModel(PROMPT, RESULTS, { list: true }));
+    it("should rejoin and split Apple Intelligence's list into plain text, as Choose from List cuts its items to a line", () => {
+      const [cloud, onDevice] = answersOf(askAiModel(PROMPT, RESULTS, { list: true }));
+      const appleIntelligence = [
+        { parameters: { WFGenerativeResultType: 'List', WFLLMPrompt: text`${PROMPT}` } },
+        { identifier: 'is.workflow.actions.text.combine', parameters: { WFTextCustomSeparator: '$$$$$' } },
+        { identifier: 'is.workflow.actions.text.split', parameters: { WFTextCustomSeparator: '$$$$$' } },
+        {},
+      ];
 
-      expect([cloud?.[0], onDevice?.[0]]).toMatchObject([
-        { parameters: { WFGenerativeResultType: 'List' } },
-        { parameters: { WFGenerativeResultType: 'List' } },
-      ]);
+      expect([cloud, onDevice]).toMatchObject([appleIntelligence, appleIntelligence]);
+    });
+
+    it("should split the ChatGPT app's text on the marker its prompt asks for", () => {
+      const [, , chatGpt] = answersOf(askAiModel(PROMPT, RESULTS, { list: true }));
+
       expect(chatGpt).toMatchObject([
         {
           identifier: 'com.openai.chat.AskIntent',
