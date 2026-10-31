@@ -1,9 +1,9 @@
+import { aiModelSetup, askAiModel } from '@ios-shortcuts/ai-model';
 import type { ShortcutContext, ShortcutWorkflow } from '@ios-shortcuts/builder';
 import {
   type TextTemplate,
   alert,
   ask,
-  askChatGpt,
   chooseFromList,
   comment,
   createShortcut,
@@ -51,7 +51,7 @@ export function shortcut({ version }: ShortcutContext): ShortcutWorkflow {
   const languages = list(LANGUAGES);
   const language = chooseFromList(outputOf(languages));
   const prompt = textAction(toPrompt());
-  const answer = askChatGpt({ prompt: text`${PROMPT}` });
+  const aiModel = aiModelSetup();
 
   return createShortcut(
     {
@@ -67,7 +67,7 @@ export function shortcut({ version }: ShortcutContext): ShortcutWorkflow {
         'WFStringContentItem',
       ],
       WFWorkflowOutputContentItemClasses: [],
-      WFWorkflowImportQuestions: [],
+      WFWorkflowImportQuestions: [aiModel.importQuestion],
       WFQuickActionSurfaces: [],
       WFWorkflowHasOutputFallback: false,
       WFWorkflowHasShortcutInputVariables: true,
@@ -75,6 +75,9 @@ export function shortcut({ version }: ShortcutContext): ShortcutWorkflow {
     },
     [
       credits(),
+      comment('—— User Configuration ——'),
+      ...aiModel.steps,
+      comment('—— End of User Configuration ——'),
       ...updateCheck({ name: 'translate-text', version }),
       comment('What to translate?'),
       menu('What to translate?', [
@@ -88,8 +91,7 @@ export function shortcut({ version }: ShortcutContext): ShortcutWorkflow {
       comment('AI Prompt'),
       prompt,
       setVariable(PROMPT, outputOf(prompt)),
-      answer,
-      setVariable(RESULTS, outputOf(answer)),
+      askAiModel(PROMPT, RESULTS),
       alert({ title: text`Translated to ${TRANSLATE_TO}`, message: text`${RESULTS}` }),
       setClipboard(RESULTS),
     ],
