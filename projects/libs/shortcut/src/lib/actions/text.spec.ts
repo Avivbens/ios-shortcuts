@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { parametersOf } from '../../mocks/actions.mock';
 import { outputOf, text, variable } from '../references';
 import { setVariable } from './scripting';
-import { getTextFromInput, replaceText, splitText, textAction, trimWhitespace } from './text';
+import { combineText, getTextFromInput, replaceText, splitText, textAction, trimWhitespace } from './text';
 
 /** Expected values follow the decoded AI Response shortcut: a plain "5", and the text named "JavaScript". */
 describe('text', () => {
@@ -72,11 +72,38 @@ describe('text', () => {
         },
       ]);
     });
+
+    it('should mark the find text as a regular expression only when asked', () => {
+      const action = replaceText(text`${variable('languages')}`, {
+        find: '\\s*,\\s*',
+        replaceWith: ',',
+        regularExpression: true,
+      });
+
+      expect(parametersOf([action])[0]).toMatchObject({
+        WFReplaceTextFind: '\\s*,\\s*',
+        WFReplaceTextRegularExpression: true,
+        WFReplaceTextReplace: ',',
+      });
+    });
   });
 
   describe('splitText', () => {
     it('should split on a custom separator under the lowercase "text" key Shortcuts uses', () => {
       expect(parametersOf([splitText(variable('results'), { separator: '$$$$$' })])).toEqual([
+        {
+          UUID: expect.any(String),
+          WFTextCustomSeparator: '$$$$$',
+          WFTextSeparator: 'Custom',
+          text: { Value: { Type: 'Variable', VariableName: 'results' }, WFSerializationType: 'WFTextTokenAttachment' },
+        },
+      ]);
+    });
+  });
+
+  describe('combineText', () => {
+    it('should combine on a custom separator under the same keys Split Text uses', () => {
+      expect(parametersOf([combineText(variable('results'), { separator: '$$$$$' })])).toEqual([
         {
           UUID: expect.any(String),
           WFTextCustomSeparator: '$$$$$',
