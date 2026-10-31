@@ -11,7 +11,7 @@ const AI_RESPONSE: ShortcutProject = {
 };
 
 const DOWNLOAD =
-  'https://github.com/Avivbens/ios-shortcuts/releases/download/release/ai-response/0.2.2/ai-response_0.2.2.shortcut';
+  'https://github.com/Avivbens/ios-shortcuts/releases/download/release/ai-response/0.2.2/AI.Response.shortcut';
 
 describe('readme-table', () => {
   describe('toReadmeTable', () => {

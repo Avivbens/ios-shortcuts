@@ -30,7 +30,7 @@ describe('shortcuts-manifest', () => {
         'ai-response': {
           version: '0.2.3',
           download:
-            'https://github.com/Avivbens/ios-shortcuts/releases/download/release/ai-response/0.2.3/ai-response_0.2.3.shortcut',
+            'https://github.com/Avivbens/ios-shortcuts/releases/download/release/ai-response/0.2.3/AI.Response.shortcut',
         },
       });
       expect(unpublished).toEqual([]);

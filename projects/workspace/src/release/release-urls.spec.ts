@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { parseReleaseTag, toAssetUrl, toDownloadsBadgeUrl, toReleaseUrl } from './release-urls';
+import { parseReleaseTag, toAssetName, toAssetUrl, toDownloadsBadgeUrl, toReleaseUrl } from './release-urls';
 
 describe('release-urls', () => {
   describe('parseReleaseTag', () => {
@@ -12,10 +12,17 @@ describe('release-urls', () => {
     });
   });
 
+  describe('toAssetName', () => {
+    it('should use the display name, with the dot GitHub stores in place of each space', () => {
+      expect(toAssetName('AI Response')).toBe('AI.Response.shortcut');
+      expect(toAssetName('Translate Text')).toBe('Translate.Text.shortcut');
+    });
+  });
+
   describe('toAssetUrl', () => {
     it('should point at the signed file attached to the release tag', () => {
-      expect(toAssetUrl('ai-response', '0.2.3')).toBe(
-        'https://github.com/Avivbens/ios-shortcuts/releases/download/release/ai-response/0.2.3/ai-response_0.2.3.shortcut',
+      expect(toAssetUrl({ name: 'ai-response', version: '0.2.3', displayName: 'AI Response' })).toBe(
+        'https://github.com/Avivbens/ios-shortcuts/releases/download/release/ai-response/0.2.3/AI.Response.shortcut',
       );
     });
   });
