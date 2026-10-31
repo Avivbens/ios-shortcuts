@@ -44,7 +44,7 @@ The **Translate Text Shortcut** is an iOS shortcut that translates text into you
 - **Share Sheet Integration**: Trigger directly from any app that supports sharing text.
 - **Clipboard Fallback**: When invoked without input, automatically reads from the clipboard.
 - **Free-Style Input**: Prefer to type? Choose the manual input option and enter any text.
-- **Multiple Target Languages**: Translate into Hebrew, English, Spanish, Italian, German, Portuguese, or Dutch.
+- **Your Target Languages**: Translate into Hebrew, English, Spanish, Italian, German, Portuguese, or Dutch by default, or into the languages you list when you add the shortcut.
 - **AI-Powered**: Uses an AI model for context-aware, natural-sounding translations.
 - **Flexible Invocation**: Run from the Shortcuts app, Home Screen, Siri, or the Share Sheet.
 
@@ -90,7 +90,7 @@ The **Translate Text Shortcut** is an iOS shortcut that translates text into you
 
 1. **Pick the Target Language**
 
-   - Choose one of the supported languages from the list.
+   - Choose one of your languages from the list.
 
 1. **Get the Translation**
    - The shortcut returns the translated text for you to copy, share, or use further.
@@ -107,7 +107,7 @@ The **Translate Text Shortcut** is an iOS shortcut that translates text into you
 - Portuguese
 - Dutch
 
-> Need another language? Open the shortcut in the Shortcuts app and add it to the **Target language** list action.
+> Need another language? List it when you add the shortcut, or edit the text under **Setup target languages** at the top of the shortcut.
 
 ---
 
@@ -120,11 +120,14 @@ The **Translate Text Shortcut** is an iOS shortcut that translates text into you
 
 1. **Add / Remove Languages**
 
-   - Edit the **Target language** list inside the shortcut to add or remove options.
+   - When you add the shortcut, list the languages to offer, separated by commas. The default is the list under [Supported Languages](#supported-languages).
+   - To change them later, edit the text under **Setup target languages** at the top of the shortcut.
 
 1. **Default Input Source**
 
    - The shortcut offers a menu (Clipboard / Free-Style) on each run. You can hard-code a default by removing the menu and wiring the input directly.
+
+> Updating the shortcut asks both questions again with their defaults filled in, so re-enter any answer you changed.
 
 ---
 
