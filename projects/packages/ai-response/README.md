@@ -53,7 +53,9 @@ The **AI Chat Suggestions Shortcut** is an iOS shortcut that provides intelligen
 - An **iOS device** running iOS 17 or later (recommend iOS 18+ for best performance).
 - The **Shortcuts** app (pre-installed on most iOS devices).
 - **Internet connection** (the AI analysis requires sending content to a remote API or AI service).
-- **ChatGPT APP** in order to query the AI model.
+- **An AI model**, picked when you add the shortcut:
+  - **Cloud** (default) or **On-Device** - Apple Intelligence, on an iPhone or iPad that supports it.
+  - **ChatGPT** - the ChatGPT app, installed and signed in.
 
 ---
 
@@ -96,6 +98,11 @@ The **AI Chat Suggestions Shortcut** is an iOS shortcut that provides intelligen
 ---
 
 ## Configuration
+
+1. **AI Model**
+
+   - When you add the shortcut, answer **Cloud** (the default, Apple Intelligence on Private Cloud Compute), **On-Device** (Apple Intelligence on your device) or **ChatGPT** (the ChatGPT app). Any other answer uses ChatGPT.
+   - To switch later, edit the text under **Setup AI model** at the top of the shortcut.
 
 1. **Number of Suggestions**
 

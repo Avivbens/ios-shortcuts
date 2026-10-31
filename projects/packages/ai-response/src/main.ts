@@ -1,3 +1,4 @@
+import { aiModelSetup } from '@ios-shortcuts/ai-model';
 import type { ShortcutContext, ShortcutWorkflow } from '@ios-shortcuts/builder';
 import { comment, createShortcut, outputOf, setVariable, textAction } from '@ios-shortcuts/shortcut';
 import { credits, updateCheck } from '@ios-shortcuts/updater';
@@ -6,6 +7,7 @@ import { NUM_OF_RESULTS } from './variables';
 
 export function shortcut({ version }: ShortcutContext): ShortcutWorkflow {
   const numOfResults = textAction('5');
+  const aiModel = aiModelSetup();
 
   return createShortcut(
     {
@@ -44,6 +46,7 @@ export function shortcut({ version }: ShortcutContext): ShortcutWorkflow {
           ParameterKey: 'WFTextActionText',
           Text: 'Amount of results',
         },
+        aiModel.importQuestion,
       ],
       WFQuickActionSurfaces: [],
       WFWorkflowHasOutputFallback: false,
@@ -54,6 +57,7 @@ export function shortcut({ version }: ShortcutContext): ShortcutWorkflow {
       comment('—— User Configuration ——\n\nSetup number of results'),
       numOfResults,
       setVariable(NUM_OF_RESULTS, outputOf(numOfResults)),
+      ...aiModel.steps,
       comment('—— End of User Configuration ——'),
       ...updateCheck({ name: 'ai-response', version }),
       ...chat(),
