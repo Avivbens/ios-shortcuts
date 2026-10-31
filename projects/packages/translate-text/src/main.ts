@@ -7,12 +7,13 @@ import {
   chooseFromList,
   comment,
   createShortcut,
-  list,
   menu,
   outputOf,
+  replaceText,
   setClipboard,
   setVariable,
   shortcutInput,
+  splitText,
   text,
   textAction,
   variable,
@@ -20,11 +21,15 @@ import {
 import { credits, updateCheck } from '@ios-shortcuts/updater';
 
 const TEXT_TO_TRANSLATE = variable('TextToTranslate');
+const LANGUAGES = variable('Languages');
 const TRANSLATE_TO = variable('TranslateTo');
 const PROMPT = variable('Prompt');
 const RESULTS = variable('Results');
 
-const LANGUAGES = ['Hebrew', 'English', 'Spanish', 'Italian', 'German', 'Portuguese', 'Dutch'];
+const DEFAULT_LANGUAGES = ['Hebrew', 'English', 'Spanish', 'Italian', 'German', 'Portuguese', 'Dutch'].join(', ');
+
+/** The import answer is free text, so the spaces around each comma go before it is split into the list. */
+const COMMA_WITH_SPACES = '\\s*,\\s*';
 
 function toPrompt(): TextTemplate {
   return text`You're a non-interactive system, providing the end user the ability to translate text.
@@ -48,8 +53,14 @@ ${TEXT_TO_TRANSLATE}
 
 export function shortcut({ version }: ShortcutContext): ShortcutWorkflow {
   const question = ask({ prompt: 'What do you want to translate?', inputType: 'Text' });
-  const languages = list(LANGUAGES);
-  const language = chooseFromList(outputOf(languages));
+  const languages = textAction(DEFAULT_LANGUAGES);
+  const commaSeparated = replaceText(text`${LANGUAGES}`, {
+    find: COMMA_WITH_SPACES,
+    replaceWith: ',',
+    regularExpression: true,
+  });
+  const languageList = splitText(outputOf(commaSeparated), { separator: ',' });
+  const language = chooseFromList(outputOf(languageList));
   const prompt = textAction(toPrompt());
   const aiModel = aiModelSetup();
 
@@ -67,7 +78,16 @@ export function shortcut({ version }: ShortcutContext): ShortcutWorkflow {
         'WFStringContentItem',
       ],
       WFWorkflowOutputContentItemClasses: [],
-      WFWorkflowImportQuestions: [aiModel.importQuestion],
+      WFWorkflowImportQuestions: [
+        aiModel.importQuestion,
+        {
+          step: languages,
+          Category: 'Parameter',
+          DefaultValue: DEFAULT_LANGUAGES,
+          ParameterKey: 'WFTextActionText',
+          Text: 'Target languages - comma separated',
+        },
+      ],
       WFQuickActionSurfaces: [],
       WFWorkflowHasOutputFallback: false,
       WFWorkflowHasShortcutInputVariables: true,
@@ -77,6 +97,9 @@ export function shortcut({ version }: ShortcutContext): ShortcutWorkflow {
       credits(),
       comment('—— User Configuration ——'),
       ...aiModel.steps,
+      comment('Setup target languages - comma separated'),
+      languages,
+      setVariable(LANGUAGES, outputOf(languages)),
       comment('—— End of User Configuration ——'),
       ...updateCheck({ name: 'translate-text', version }),
       comment('What to translate?'),
@@ -85,7 +108,8 @@ export function shortcut({ version }: ShortcutContext): ShortcutWorkflow {
         ['Free-Style', [question, setVariable(TEXT_TO_TRANSLATE, outputOf(question))]],
       ]),
       comment('Target language'),
-      languages,
+      commaSeparated,
+      languageList,
       language,
       setVariable(TRANSLATE_TO, outputOf(language)),
       comment('AI Prompt'),
