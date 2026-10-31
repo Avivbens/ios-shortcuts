@@ -18,7 +18,7 @@ export async function advanceManifest(
 ): Promise<AdvancedManifest> {
   const advanced = await Promise.all(
     shortcuts.map(async (shortcut) => {
-      const download = toAssetUrl(shortcut.name, shortcut.version);
+      const download = toAssetUrl(shortcut);
 
       return {
         shortcut,

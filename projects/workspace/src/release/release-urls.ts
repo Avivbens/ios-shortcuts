@@ -1,4 +1,5 @@
 import { REPO_URL } from './release.constants';
+import type { ShortcutProject } from './shortcut-projects';
 
 export function toReleaseTag(name: string, version: string): string {
   return `release/${name}/${version}`;
@@ -13,13 +14,21 @@ export function parseReleaseTag(tag: string): { name: string; version: string } 
   return { name, version };
 }
 
-/** The signed file's name, which is also the release asset's - the signer and the sync must agree on it. */
-export function toAssetName(name: string, version: string): string {
-  return `${name}_${version}.shortcut`;
+/**
+ * The signed file's name, which is also the release asset's. Shortcuts installs a download under its file name, so it is
+ * the display name; GitHub turns every character but letters, digits, `.`, `-` and `_` into a dot, so the name is built
+ * that way up front and matches the asset GitHub serves.
+ */
+export function toAssetName(displayName: string): string {
+  return `${displayName.replace(/[^\w.-]/g, '.')}.shortcut`;
 }
 
-export function toAssetUrl(name: string, version: string): string {
-  return `${REPO_URL}/releases/download/${toReleaseTag(name, version)}/${toAssetName(name, version)}`;
+export function toAssetUrl({
+  name,
+  version,
+  displayName,
+}: Pick<ShortcutProject, 'name' | 'version' | 'displayName'>): string {
+  return `${REPO_URL}/releases/download/${toReleaseTag(name, version)}/${toAssetName(displayName)}`;
 }
 
 export function toReleaseUrl(name: string, version: string): string {

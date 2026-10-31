@@ -27,21 +27,21 @@ describe('sign executor', () => {
     await rm(root, { recursive: true, force: true });
   });
 
-  it('should sign the build under the display name into a versioned asset', async () => {
+  it('should sign the build into an asset named after the display name, which Shortcuts installs it under', async () => {
     expect(await signExecutor({}, toExecutorContext(root, 'ai-response'))).toEqual({ success: true });
 
     expect(signShortcut).toHaveBeenCalledWith({
       inputPath: join(root, 'dist/ai-response/ai-response.plist'),
       displayName: 'AI Response',
-      outputPath: join(root, 'dist/ai-response/ai-response_0.2.2.shortcut'),
+      outputPath: join(root, 'dist/ai-response/AI.Response.shortcut'),
     });
   });
 
-  it('should name the asset after the version sign:ci forwards to build', async () => {
+  it('should keep the version out of the asset name, so an update replaces the installed copy', async () => {
     await signExecutor({ version: '0.2.3' }, toExecutorContext(root, 'ai-response'));
 
     expect(signShortcut).toHaveBeenCalledWith(
-      expect.objectContaining({ outputPath: join(root, 'dist/ai-response/ai-response_0.2.3.shortcut') }),
+      expect.objectContaining({ outputPath: join(root, 'dist/ai-response/AI.Response.shortcut') }),
     );
   });
 });

@@ -2,6 +2,7 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { $ } from 'zurk';
 import { parseReleaseTag, toAssetName } from './release-urls';
+import { loadShortcutProjects } from './shortcut-projects';
 
 /** The asset must be the released source itself, so it is signed only from a clean checkout of the tag. */
 async function assertCheckedOutAt(tag: string): Promise<void> {
@@ -24,8 +25,13 @@ export async function attachReleaseAsset(root: string, tag: string): Promise<str
   const { name, version } = parseReleaseTag(tag);
   await assertCheckedOutAt(tag);
 
+  const project = (await loadShortcutProjects()).find((shortcut) => shortcut.name === name);
+  if (!project) {
+    throw new Error(`${name} is not a shortcut in this workspace`);
+  }
+
   await $`pnpm exec nx run ${`${name}:sign:ci`} -- --version ${version}`;
-  const asset = join(root, 'dist', name, toAssetName(name, version));
+  const asset = join(root, 'dist', name, toAssetName(project.displayName));
   if (!existsSync(asset)) {
     throw new Error(`sign:ci did not write ${asset}`);
   }
