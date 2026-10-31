@@ -17,6 +17,7 @@
       "build": {},
       "sign": {},
       "serve": {},
+      "test": {},
       "nx-release-publish": {
         "options": {
           "packageJson": "projects/packages/ai-response/package.json",
