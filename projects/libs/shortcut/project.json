@@ -5,7 +5,6 @@
   "projectType": "library",
   "tags": ["os:agnostic", "lib:util"],
   "targets": {
-    "test": {},
-    "lint": {}
+    "test": {}
   }
 }

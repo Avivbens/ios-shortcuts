@@ -17,7 +17,6 @@
       "build": {},
       "sign": {},
       "serve": {},
-      "lint": {},
       "nx-release-publish": {
         "options": {
           "packageJson": "projects/packages/translate-text/package.json",

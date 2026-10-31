@@ -25,6 +25,12 @@
         "testTargetName": "test",
         "testMode": "run"
       }
+    },
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
     }
   ],
   "targetDefaults": {
@@ -71,17 +77,8 @@
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
       "inputs": ["default", "^default", "{workspaceRoot}/eslint.config.mjs", "{workspaceRoot}/.prettierrc"],
-      "cache": true,
-      "configurations": {
-        "fix": {
-          "fix": true
-        }
-      },
-      "options": {
-        "lintFilePatterns": ["{projectRoot}/src/**/*.ts"]
-      }
+      "cache": true
     },
     "test": {
       "inputs": ["default", "^default", "{workspaceRoot}/vitest.shared.mts"]

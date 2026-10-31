@@ -6,7 +6,6 @@
   "tags": ["e2e"],
   "implicitDependencies": ["ai-response", "translate-text"],
   "targets": {
-    "test": {},
-    "lint": {}
+    "test": {}
   }
 }
