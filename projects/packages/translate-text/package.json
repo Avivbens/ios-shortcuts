@@ -1,6 +1,6 @@
 {
   "name": "@ios-shortcuts/translate-text",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "private": true,
   "description": "Translate text from the Share Sheet, clipboard, or free-style input using AI",
   "dependencies": {},
