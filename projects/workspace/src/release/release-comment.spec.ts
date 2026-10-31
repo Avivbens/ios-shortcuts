@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { commentReleaseOnPullRequests, toReleaseComment } from './release-comment';
 
 const { $ } = vi.hoisted(() => ({ $: vi.fn() }));
-vi.mock('zurk', () => ({ $ }));
+vi.mock('./bash', () => ({ bash: (options?: { input: string }) => (options ? $(options) : $) }));
 
 type Call = [TemplateStringsArray, ...unknown[]];
 

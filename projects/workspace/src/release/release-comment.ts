@@ -1,4 +1,4 @@
-import { $ } from 'zurk';
+import { bash } from './bash';
 
 function toLines(output: unknown): string[] {
   return String(output)
@@ -32,9 +32,9 @@ export function toReleaseComment(tags: string[]): string {
  * against that instead.
  */
 async function getMergedPullRequests(before: string, after: string): Promise<number[]> {
-  const pushed = new Set(toLines(await $`git rev-list ${`${before}..${after}`}`));
+  const pushed = new Set(toLines(await bash()`git rev-list ${`${before}..${after}`}`));
   const merged = toLines(
-    await $`gh api ${'repos/{owner}/{repo}/pulls?state=closed&sort=updated&direction=desc&per_page=100'} --jq ${'.[] | select(.merged_at) | "\\(.number) \\(.merge_commit_sha)"'}`,
+    await bash()`gh api ${'repos/{owner}/{repo}/pulls?state=closed&sort=updated&direction=desc&per_page=100'} --jq ${'.[] | select(.merged_at) | "\\(.number) \\(.merge_commit_sha)"'}`,
   );
 
   return merged
@@ -46,7 +46,7 @@ async function getMergedPullRequests(before: string, after: string): Promise<num
 
 /** Comments the attach commands on every PR the push merged, once `nx release` has tagged HEAD. */
 export async function commentReleaseOnPullRequests(before: string, after: string): Promise<number[]> {
-  const tags = toLines(await $`git tag --points-at HEAD --list ${'release/*'}`).sort();
+  const tags = toLines(await bash()`git tag --points-at HEAD --list ${'release/*'}`).sort();
   if (!tags.length) {
     return [];
   }
@@ -57,7 +57,7 @@ export async function commentReleaseOnPullRequests(before: string, after: string
     throw new Error(`${tags.join(', ')} found no merged PR in ${before}..${after} to comment on\n\n${body}`);
   }
 
-  await Promise.all(pullRequests.map((number) => $({ input: body })`gh pr comment ${number} --body-file -`));
+  await Promise.all(pullRequests.map((number) => bash({ input: body })`gh pr comment ${number} --body-file -`));
 
   return pullRequests;
 }

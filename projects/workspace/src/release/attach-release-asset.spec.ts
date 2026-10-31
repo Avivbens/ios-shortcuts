@@ -5,7 +5,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { attachReleaseAsset } from './attach-release-asset';
 
 const { $ } = vi.hoisted(() => ({ $: vi.fn() }));
-vi.mock('zurk', () => ({ $ }));
+vi.mock('./bash', () => ({ bash: () => $ }));
 vi.mock('./shortcut-projects', () => ({
   loadShortcutProjects: async () => [
     {
