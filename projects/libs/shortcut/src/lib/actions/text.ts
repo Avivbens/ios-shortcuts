@@ -19,13 +19,14 @@ export function getTextFromInput(input: Reference, { name }: { name?: string } =
 
 export function replaceText(
   input: Reference | TextTemplate,
-  { find, replaceWith }: { find: string; replaceWith?: string },
+  { find, replaceWith, regularExpression = false }: { find: string; replaceWith?: string; regularExpression?: boolean },
 ): Action {
   return rawAction(
     'is.workflow.actions.text.replace',
     {
       WFInput: input,
       WFReplaceTextFind: find,
+      ...(regularExpression ? { WFReplaceTextRegularExpression: true } : {}),
       ...(replaceWith === undefined ? {} : { WFReplaceTextReplace: replaceWith }),
     },
     { outputName: 'Updated Text' },
@@ -37,6 +38,14 @@ export function splitText(input: Reference, { separator }: { separator: string }
     'is.workflow.actions.text.split',
     { WFTextCustomSeparator: separator, WFTextSeparator: 'Custom', text: input },
     { outputName: 'Split Text' },
+  );
+}
+
+export function combineText(input: Reference, { separator }: { separator: string }): Action {
+  return rawAction(
+    'is.workflow.actions.text.combine',
+    { WFTextCustomSeparator: separator, WFTextSeparator: 'Custom', text: input },
+    { outputName: 'Combined Text' },
   );
 }
 
