@@ -81,5 +81,13 @@ describe('shortcuts', () => {
 
       expect([undefined, versionOf(name)]).toContain(getVariableText(workflow, VERSION_VARIABLE));
     });
+
+    it('should ask each import question on an action holding its parameter, or the answer is lost', async () => {
+      const { WFWorkflowActions: actions, WFWorkflowImportQuestions: questions } = await build();
+
+      questions.forEach(({ ActionIndex, ParameterKey }) => {
+        expect(actions[ActionIndex]?.WFWorkflowActionParameters).toHaveProperty(ParameterKey);
+      });
+    });
   });
 });
