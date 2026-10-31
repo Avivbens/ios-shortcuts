@@ -42,7 +42,7 @@
 2. Open the file in the **Shortcuts** app, review its actions, and tap **Add Shortcut**.
 3. Run it from the Share Sheet, Siri, your Home Screen or the Action Button.
 
-**Note:** AI-powered shortcuts (AI Response, Translate Text) use the ChatGPT app, so install and sign in to it first.
+**Note:** AI-powered shortcuts (AI Response, Translate Text) ask which AI model to use when you add them: Apple Intelligence **Cloud** (the default) or **On-Device** on a device that supports it, or **ChatGPT**, which needs the ChatGPT app installed and signed in.
 
 ## 🚀 Overview
 
