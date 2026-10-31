@@ -80,3 +80,11 @@ jobs:
           GIT_COMMITTER_EMAIL: github-actions[bot]@users.noreply.github.com
         run: |
           pnpm exec nx release --first-release
+
+      - name: 💬 Comment the attach commands on the released PRs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_BEFORE: ${{ github.event.before }}
+          RELEASE_AFTER: ${{ github.sha }}
+        run: |
+          pnpm run release-comment
