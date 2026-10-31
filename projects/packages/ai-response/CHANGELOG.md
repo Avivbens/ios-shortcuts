@@ -1,3 +1,13 @@
+## 0.2.4 (2026-10-31)
+
+### 🩹 Fixes
+
+- **ai-response:** ask the import question on the results count ([a9d1828](https://github.com/Avivbens/ios-shortcuts/commit/a9d1828))
+
+### ❤️ Thank You
+
+- Aviv Ben Shahar
+
 ## 0.2.3 (2026-10-25)
 
 This was a version bump only for ai-response to align it with other projects, there were no code changes.

@@ -1,3 +1,13 @@
+## 0.2.5 (2026-10-31)
+
+### 🚀 Features
+
+- **translate-text:** offer updates like AI Response ([8a2b896](https://github.com/Avivbens/ios-shortcuts/commit/8a2b896))
+
+### ❤️ Thank You
+
+- Aviv Ben Shahar
+
 ## 0.2.4 (2026-10-25)
 
 This was a version bump only for translate-text to align it with other projects, there were no code changes.
