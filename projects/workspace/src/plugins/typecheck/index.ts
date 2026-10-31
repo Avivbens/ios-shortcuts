@@ -1,11 +1,5 @@
 import { basename } from 'node:path';
-import {
-  CreateNodes,
-  CreateNodesContext,
-  CreateNodesResult,
-  TargetConfiguration,
-  createNodesFromFiles,
-} from '@nx/devkit';
+import { CreateNodes, CreateNodesResult, TargetConfiguration, createNodesFromFiles } from '@nx/devkit';
 
 /**
  * Determines the correct tsconfig file to use based on project type.
@@ -17,16 +11,14 @@ const findTsconfig = (configFilePath: string) => {
   return filename;
 };
 
-function buildTypecheckTarget(
-  configFilePath: string,
-  _options: unknown,
-  _context: CreateNodesContext,
-): CreateNodesResult {
+function buildTypecheckTarget(configFilePath: string): CreateNodesResult {
   const projectRoot = configFilePath.split('/').slice(0, -1).join('/');
 
   const tsconfig = findTsconfig(configFilePath);
 
-  if (!tsconfig) return {};
+  if (!tsconfig) {
+    return {};
+  }
 
   const target: TargetConfiguration = {
     executor: 'nx:run-commands',
