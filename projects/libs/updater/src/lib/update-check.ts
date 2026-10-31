@@ -30,29 +30,18 @@ const LATEST_VERSION = variable('latestVersion');
 const DOWNLOAD_LINK = variable('shortcutDownloadLink');
 const SHOULD_UPDATE = variable('shouldUpdate');
 
-/** Shortcuts has no version compare, so a web page runs this script and prints whether to update. */
+/**
+ * Shortcuts has no version compare, so a web page runs this script and prints whether to update. Parts compare as
+ * numbers from the first that differs, so 0.2.10 beats 0.2.9 and a newer copy is never offered an older one.
+ */
 function toCompareScript(): TextTemplate {
   return text`<script>
-const latest = '${LATEST_VERSION}'
-const current = '${SHORTCUT_VERSION}'
+const latest = '${LATEST_VERSION}'.split('.').map(Number)
+const current = '${SHORTCUT_VERSION}'.split('.').map(Number)
 
-const latestValues = latest.split('.')
-const currentValues = current.split('.')
+const index = latest.findIndex((part, i) => part !== (current[i] ?? 0))
 
-const shouldUpdate = latestValues.reduce((acc, _, index) => {
-  if (acc) {
-    return acc
-  }
-
-  if (latestValues[index] > currentValues[index]) {
-    return true
-  }
-
-  return acc
-}, false)
-
-document.write(shouldUpdate);
-
+document.write(index !== -1 && latest[index] > (current[index] ?? 0));
 </script>`;
 }
 
