@@ -1,10 +1,10 @@
 {
   "ai-response": {
-    "version": "0.2.5",
-    "download": "https://github.com/Avivbens/ios-shortcuts/releases/download/release/ai-response/0.2.5/AI.Response.shortcut"
+    "version": "0.2.6",
+    "download": "https://github.com/Avivbens/ios-shortcuts/releases/download/release/ai-response/0.2.6/AI.Response.shortcut"
   },
   "translate-text": {
-    "version": "0.2.6",
-    "download": "https://github.com/Avivbens/ios-shortcuts/releases/download/release/translate-text/0.2.6/Translate.Text.shortcut"
+    "version": "0.2.7",
+    "download": "https://github.com/Avivbens/ios-shortcuts/releases/download/release/translate-text/0.2.7/Translate.Text.shortcut"
   }
 }
